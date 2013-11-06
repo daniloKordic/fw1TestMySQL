@@ -1,0 +1,234 @@
+body{
+	background: #f1f1f1;
+}
+.menu{
+	height:250px;
+}
+.content{
+	border: 1px solid #E3E3E3;
+   border-radius: 4px 4px 4px 4px;
+	padding:5px;
+	height:450px;
+	margin-left: 10px !important;
+}
+.news{
+	border: 1px solid #E3E3E3;
+	border-radius: 4px 4px 4px 4px;
+	padding: 5px;
+	height: 450px;
+	margin-left: 10px !important;
+}
+.footer {
+	margin-top: 20px;
+}
+.footerColumn {
+	border: 1px solid #E3E3E3;
+   border-radius: 4px 4px 4px 4px;
+	padding: 10px;
+}
+.container-long{
+	 margin:0 auto;
+	 width:1150px;
+}
+.nav-header{
+	font-size: 10px;
+}
+.nav-list li a{
+	font-size: 10px;
+}
+.pull-down-50{
+	margin-top:50px;
+}
+.row {
+    -moz-box-sizing: padding-box;
+    border: 1px solid #595959;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-bottom: 11px;
+    padding: 10px;
+    position: relative;
+    margin:20px;
+}
+.padding-top-0 {
+    padding-top: 0;
+}
+.padding-right-0 {
+    padding-right: 0;
+}
+.padding-left-0 {
+    padding-left: 0;
+}
+.row {
+    -moz-box-sizing: padding-box;
+    border: 1px solid #BFBFBF;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-bottom: 11px;
+    padding: 10px;
+    position: relative;
+}
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+.margin-top-0 {
+    margin-top: 0;
+}
+.width-100 {
+    -moz-box-sizing: border-box;
+    width: 100%;
+}
+.tabtitle {
+    -moz-box-sizing: border-box;
+    background-color: #D9D9D9;
+    border-bottom: 1px solid #BFBFBF;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #004987;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 2px 0;
+    text-align: left;
+    text-indent: 12px;
+}
+.margin-right-10 {
+    margin-right: 10px;
+}
+.margin-left-10 {
+    margin-left: 10px;
+}
+.margin-top-10 {
+    margin-top: 10px;
+}
+.backgrey-100 {
+    -moz-box-sizing: padding-box;
+    /*background: none repeat scroll 0 0 #F1F1F1;*/
+    border: medium none;
+    border-radius: 5px;
+    font-size: 12px;
+    height: 100%;
+    /*margin: 0;*/
+    padding: 10px 15px 0;
+    position: relative;
+}
+.white{
+	background-color: white;
+}
+.clear{
+	clear: both;
+}
+.right{
+	float:right;
+}
+.row-head {
+    -moz-box-sizing: padding-box;    
+    font-size: 12px;
+    margin-bottom: 11px;
+    position: relative;
+}
+.inlineStrip {
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #F1F1F1;
+    border-radius: 5px;
+    color: #004987;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 7px 15px;
+}
+span.bold {
+    font-weight: bold;
+}
+.textCenter {
+    text-align: center;
+}
+.nobackground {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+.table {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    -moz-box-sizing: border-box;
+    border-collapse: separate;
+    border-color: #BFBFBF -moz-use-text-color #BFBFBF #BFBFBF;
+    border-image: none;
+    border-style: solid none solid solid;
+    border-width: 1px 0 1px 1px;
+    font-family: arial;
+    font-size: 12px;
+    width: 100%;
+}
+.table thead {
+    border-radius: 3px;
+}
+.table th:first-child {
+    border-left: medium none;
+}
+.table th {
+    -moz-box-sizing: border-box;
+    background: -moz-linear-gradient(center top , #EFEFEF, #D7D7D7) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-bottom: 1px solid #BFBFBF;
+    border-left: 0 solid #FFFFFF;
+    border-right: 1px solid #BFBFBF;
+    color: #000000;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: normal;
+    height: 23px;
+    line-height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: left;
+    text-indent: 0;
+    white-space: nowrap;
+}
+
+.table td {
+    -moz-box-sizing: border-box;
+    border-left: 0 solid #FFFFFF;
+    border-right: 1px solid #BFBFBF;
+    color: #000000;
+    font-family: arial;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    text-align: left;
+}
+.width-800px {
+    -moz-box-sizing: border-box;
+    width: 800px;
+}
+.row-head {
+    -moz-box-sizing: padding-box;
+    border: 1px solid #595959;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-bottom: 11px;
+    position: relative;    
+}
+.inlineStrip-right {
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #F1F1F1;
+    border-radius: 5px;
+    color: #004987;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 15px;
+    text-align: right;
+}
+.userRow td {
+    vertical-align: middle;
+}
+.userRow td a {
+    color: black;
+    font-weight: bold;
+}
+.userRow td a:hover {
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
+}
+.userRow:hover {
+    background-color: lightgrey;
+}
