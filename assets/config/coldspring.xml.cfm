@@ -2,7 +2,7 @@
 
 <beans default-autowire="byName">
 
-	<bean id="appSettings" autowire="no" class="fw1test.model.config">
+	<bean id="appSettings" autowire="no" class="fw1testMySQL.model.config">
 		<property name="config">
 			<map>
 				<entry key="dsn"><value>${dsn}</value></entry>
@@ -14,24 +14,24 @@
 		<constructor-arg name="settings"><ref bean="appSettings" /></constructor-arg>
 	</bean>
 
-	<bean id="userService" autowire="no" class="fw1Test.model.userService">
+	<bean id="userService" autowire="no" class="fw1TestMySQL.model.userService">
 		<constructor-arg name="userGateway"><ref bean="userGateway"/></constructor-arg>
 	</bean>
-	<bean id="userGateway" autowire="no" parent="ParentConfig" class="fw1Test.model.userGateway" />
+	<bean id="userGateway" autowire="no" parent="ParentConfig" class="fw1TestMySQL.model.userGateway" />
 
-	<bean id="menuService" autowire="no" class="fw1Test.model.menuService">
+	<bean id="menuService" autowire="no" class="fw1TestMySQL.model.menuService">
 		<constructor-arg name="menuGateway"><ref bean="menuGateway" /></constructor-arg>
 	</bean>
-	<bean id="menuGateway" autowire="no" parent="ParentConfig" class="fw1Test.model.menuGateway" />
+	<bean id="menuGateway" autowire="no" parent="ParentConfig" class="fw1TestMySQL.model.menuGateway" />
 
-	<bean id="productService" autowire="no" class="fw1Test.model.productService">
+	<bean id="productService" autowire="no" class="fw1TestMySQL.model.productService">
 		<constructor-arg name="productGateway"><ref bean="productGateway"/></constructor-arg>		
 	</bean>
-	<bean id="productGateway" autowire="no" parent="ParentConfig" class="fw1Test.model.productGateway"/>
+	<bean id="productGateway" autowire="no" parent="ParentConfig" class="fw1TestMySQL.model.productGateway"/>
 
-	<bean id="categoryService" autowire="no" class="fw1Test.model.categoryService">
+	<bean id="categoryService" autowire="no" class="fw1TestMySQL.model.categoryService">
 		<constructor-arg name="categoryGateway"><ref bean="categoryGateway"/></constructor-arg>		
 	</bean>
-	<bean id="categoryGateway" autowire="no" parent="ParentConfig" class="fw1Test.model.categoryGateway"/>		
+	<bean id="categoryGateway" autowire="no" parent="ParentConfig" class="fw1TestMySQL.model.categoryGateway"/>		
 
 </beans>

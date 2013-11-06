@@ -17,7 +17,7 @@
 		<cfargument name="product" required="true" type="any" />
 		<cfset var qry=""/>
 		<cfquery name="qry" datasource="#getDSN()#">
-			select newid() as newuid
+			select  uuid() as newuid
 		</cfquery>
 		<cfset var uid = qry.newuid />
 		<cfquery name="qry" datasource="#getDSN()#">
@@ -28,21 +28,22 @@
 				,dateCreated
 				,active
 			) values (
-				<cfqueryparam cfsqltype="cf_sql_varchar" value="#uid#" />
-				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductName()#" />
-				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductDescription()#" />
-				,GetDate()
-				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.product.getActive()#" />
-			)
-
-			<cfif arguments.product.getCategoryUID neq "">
-				insert into Products2CategoriesLookup values (
-					<cfqueryparam cfsqltype="cf_sql_varchar" value="#uid#" />
-					,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getCategoryUID()#" />
-				)	
-			</cfif>
-			
+				'#uid#'
+				,'#arguments.product.getProductName()#'
+				,'#arguments.product.getProductDescription()#'
+				,NOW()
+				,#arguments.product.getActive()#
+			);			
 		</cfquery>
+
+		<cfif arguments.product.getCategoryUID neq "">
+			<cfquery name="qInsertLookups" datasource="#getDSN()#">
+				insert into Products2CategoriesLookup (ProductUID, CategoryUID) values (
+					'#uid#'
+					,'#arguments.product.getCategoryUID()#'
+				);
+			</cfquery>					
+		</cfif>
 		<cfreturn uid />
 	</cffunction>
 
@@ -57,16 +58,21 @@
 				,ProductDescription=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductDescription()#" />
 				,active=<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.product.getActive()#" />
 			where
-				ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />
+				ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />;
+		</cfquery>
 
-			delete from Products2CategoriesLookup where ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />
-			<cfif arguments.product.getCategoryUID() neq "">
+
+		<cfif arguments.product.getCategoryUID() neq "">
+			<cfquery name="qDeleteLookup" datasource="#getDSN()#">
+				delete from Products2CategoriesLookup where ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />;
+			</cfquery>
+			<cfquery name="qInsertLookups" datasource="#getDSN()#">
 				insert into Products2CategoriesLookup values (
 					<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />
 					,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getCategoryUID()#" />
-				)	
-			</cfif>
-		</cfquery>
+				);
+			</cfquery>				
+		</cfif>
 
 		<cfreturn uid />
 	</cffunction>
@@ -93,7 +99,7 @@
 			select
 				p.*
 			from
-				Products p with (nolock)
+				Products p  
 		</cfquery>
 
 		<cfreturn qry />
@@ -112,9 +118,9 @@
 					,p.productDescription
 					,p.dateCreated
 					,p.active
-					,CategoryUID=(select CategoryUID from Products2CategoriesLookup where ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />)
+					,(select CategoryUID from Products2CategoriesLookup where ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />) as CategoryUID
 				from
-					Products p with (nolock)
+					Products p  
 				where
 					1=1
 					and p.ProductUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
@@ -142,7 +148,7 @@
 			select
 				p.*
 			from
-				Products p with (nolock)
+				Products p  
 			where
 				1=1
 				<cfif structKeyExists(arguments.filter, "ProductName") and len(arguments.filter.productName)>
@@ -164,13 +170,13 @@
 					,p.ProductName
 					,p.ProductDescription
 					,p.active				
-					,CategoryUID=(select CategoryUID from Products2CategoriesLookup p2c with (nolock) where p2c.ProductUID=p.ProductUID)
+					,(select CategoryUID from Products2CategoriesLookup p2c   where p2c.ProductUID=p.ProductUID) as CategoryUID
 				from
-					Products p with (nolock)
+					Products p  
 				<cfif arguments.uid neq "">
 					where
 						1=1
-						and p.ProductUID in (select ProductUID from Products2CategoriesLookup where CategoryUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />)
+						and p.ProductUID in (select ProductUID from Products2CategoriesLookup where CategoryUID='#arguments.uid#')
 				</cfif>
 			) tbl
 			where
@@ -187,9 +193,9 @@
 				select
 					c.CategoryUID
 					,c.CategoryName
-					,hasChildren=(select count(CategoryUID) from Categories ca with (nolock) where ca.ParentUID=c.CategoryUID)
+					,(select count(CategoryUID) from Categories ca   where ca.ParentUID=c.CategoryUID) as hasChildren
 				from
-					Categories c with (nolock)
+					Categories c  
 			) tbl
 			where
 				tbl.hasChildren = 0
@@ -204,8 +210,8 @@
 		<cfset qry=""/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			delete from Products where ProductUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />
-			delete from Products2CategoriesLookup where ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#"/>				
+			delete from Products where ProductUID = '#arguments.product.getProductUID()#';
+			delete from Products2CategoriesLookup where ProductUID='#arguments.product.getProductUID()#';
 		</cfquery>
 
 		<cfreturn 1 />

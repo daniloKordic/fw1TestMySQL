@@ -21,7 +21,7 @@
 			select
 				u.*
 			from
-				Users u with (nolock)
+				Users u  
 		</cfquery>
 
 		<cfreturn qry />
@@ -69,7 +69,7 @@
 				select
 					u.*
 				from
-					Users u with (nolock)
+					Users u  
 				where
 					userUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
 			</cfquery>
@@ -108,7 +108,7 @@
 					,u.typeID
 					,u.userImage
 				from
-					Users u with (nolock)
+					Users u  
 				WHERE
 					u.email=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#" />
 					and u.isActive=1
@@ -137,12 +137,12 @@
 		<cfargument name="user" required="true" type="any" />
 		<cfset var qry=""/>
 		<cfquery name="qry" datasource="#getDSN()#">
-			select newid() as newUID
+			select  uuid() as newUID
 		</cfquery>
 		<cfset var uid = qry.newUID/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			insert into users (
+			insert into Users (
 				 userUID
 				,FirstName
 				,LastName
@@ -208,7 +208,7 @@
 		<cfset qry=""/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			delete from users where useruid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
+			delete from Users where useruid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
 		</cfquery>
 
 		<cfreturn 1 />
@@ -220,7 +220,7 @@
 		<cfset var result = ""/>
 
 		<cfquery name="confirmAccount" datasource="#getDSN()#">
-			update users
+			update Users
 			set isActive=1
 			where userUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userUID#" />
 		</cfquery>

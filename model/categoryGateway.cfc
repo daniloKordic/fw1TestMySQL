@@ -19,7 +19,7 @@
 		<cfset var qry=""/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			select newid() as newUID
+			select  uuid() as newUID
 		</cfquery>
 		<cfset var uid = qry.newUID />
 
@@ -41,7 +41,7 @@
 				<cfelse>
 					,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.category.getParentUID()#" />					
 				</cfif>
-				,GetDate()
+				,NOW()
 				,NULL
 				,<cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.category.getSort()#" />
 			)
@@ -68,7 +68,7 @@
 				<cfelse>
 					,ParentUID=NULL
 				</cfif>
-				,DateUpdated=GetDate()
+				,DateUpdated=NOW()
 				,sort=<cfqueryparam cfsqltype="cf_sql_numeric" value="#arguments.category.GetSort()#" />
 			where CategoryUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.category.getCategoryUID()#" />
 		</cfquery>
@@ -106,10 +106,10 @@
 		<cfquery name="qry" datasource="#getDSN()#">
 			select
 				c.*
-				,Parent=(select CategoryName from Categories cc where  cc.CategoryUID=c.ParentUID)				
-				,hasChildren=(select count(categoryUID) from Categories ccc where ccc.ParentUID = c.CategoryUID)
+				,(select CategoryName from Categories cc where  cc.CategoryUID=c.ParentUID) as Parent
+				,(select count(categoryUID) from Categories ccc where ccc.ParentUID = c.CategoryUID) as hasChildren
 			from
-				Categories c with (nolock)
+				Categories c  
 			order by
 				c.sort
 		</cfquery>
@@ -132,9 +132,9 @@
 					,c.ParentUID
 					,c.DateCreated
 					,c.DateUpdated
-					,sort=coalesce(c.Sort, 0)
+					,coalesce(c.Sort, 0) as sort
 				from
-					Categories c with (nolock)
+					Categories c  
 				where
 					CategoryUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
 			</cfquery>
@@ -162,7 +162,7 @@
 			select
 				c.*
 			from
-				Categories c with (nolock)
+				Categories c  
 			where
 				1=1
 				<cfif structKeyExists(arguments.filter, "CategoryName")and len(arguments.filter.CategoryName)>
@@ -178,9 +178,9 @@
 		<cfquery name="qry" datasource="#getDSN()#">
 			select
 				c.*
-				,hasChildren=(select count(categoryUID) from Categories ca with (nolock) where ca.ParentUID=c.CategoryUID)
+				,(select count(categoryUID) from Categories ca where ca.ParentUID=c.CategoryUID) as hasChildren
 			from
-				Categories c with (nolock)		
+				Categories c 
 			order by
 				c.Sort	
 		</cfquery>

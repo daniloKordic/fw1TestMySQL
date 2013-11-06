@@ -22,13 +22,13 @@
 		<cfset var fSort =  arguments.menuItem.getSort()/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			select newID() as newUID
+			select  uuid() as newUID
 		</cfquery>
 		<cfset var uid = qry.newUID />
 
 		<cfquery name="getSort" datasource="#getDSN()#">
 			select
-				sort = MAX(coalesce(sort,0))+1
+				MAX(coalesce(sort,0))+1 as sort
 			from 
 				Menu
 			where
@@ -127,7 +127,7 @@
 		<cfset var qry = ""/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			delete from menu where MenuItemUID=<cfqueryparam value="#arguments.menuItem.getMenuItemUID()#" cfsqltype="cf_sql_varchar" />
+			delete from Menu where MenuItemUID=<cfqueryparam value="#arguments.menuItem.getMenuItemUID()#" cfsqltype="cf_sql_varchar" />
 		</cfquery>
 
 		<cfreturn 1 />
@@ -139,16 +139,16 @@
 		<cfquery name="qryMenu" datasource="#getDSN()#">
 			select
 				m.MenuItemUID,
-				MenuTitle=m.MenuTitle,
-				PageUID=coalesce(m.PageUID,null),
+				m.MenuTitle as MenuTitle,
+				coalesce(m.PageUID,null) as PageUID,
 				m.MenuItemLevel,
-				ParentMenuItemUID=coalesce(m.ParentMenuItemUID,null),				
-				ParentMenuItem = (select MenuTitle from Menu mm where mm.MenuItemUID=m.ParentMenuItemUID),
+				coalesce(m.ParentMenuItemUID,null) as ParentMenuItemUID,				
+				(select MenuTitle from Menu mm where mm.MenuItemUID=m.ParentMenuItemUID) as ParentMenuItem,
 				Sort,
-				isParent = (select count(MenuItemUID) from Menu where ParentMenuItemUID=m.MenuItemUID),
+				(select count(MenuItemUID) from Menu where ParentMenuItemUID=m.MenuItemUID) as isParent,
 				m.Action
 			from
-				Menu m with (nolock)
+				Menu m
 			where
 				1=1
 			order
@@ -174,12 +174,12 @@
 					,m.Sort
 					,m.PageUID
 					,m.action
-					,hasChildren = case when (select count(me.MenuTitle) from Menu me with (nolock) where m.MenuItemUID=me.ParentMenuItemUID) >= 1 then 1 else 0 end
+					,case when (select count(me.menuTitle) from Menu me where me.MenuItemUID=m.MenuItemUID) then 1 else 0 end as hasChildren
 				from
-					Menu m with (nolock)
+					Menu m  
 				where
 					1=1
-					and m.MenuItemUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
+					and m.MenuItemUID='#arguments.uid#'
 			</cfquery>
 
 			<cfif qry.recordCount eq 1>
@@ -207,7 +207,7 @@
 			select
 				m.*
 			from
-				Menu m with (nolock)
+				Menu m 
 			where
 				1=1
 				<cfif structKeyExists(arguments.filter, "menuTitle") and len(arguments.filter.menuTitle)>
@@ -225,10 +225,9 @@
 			select 
 				m.* 
 			from
-				menu m with (nolock)
+				Menu m 
 			where 
 				1=1
-				--and m.menuitemuid in (select parentmenuitemuid from menu)
 				and m.MenuItemLevel < 3
 			order by
 				m.MenuItemLevel, m.sort
@@ -243,9 +242,9 @@
 
 		<cfquery name="qry" datasource="#getDSN()#">
 			select
-				menuItemLevel=coalesce(m.MenuItemLevel,0)+1
+				coalesce(m.MenuItemLevel,0)+1 as menuItemLevel
 			from
-				Menu m with (nolock)
+				Menu m  
 			where
 				m.MenuItemUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parentMenuItemUID#" />
 		</cfquery>
