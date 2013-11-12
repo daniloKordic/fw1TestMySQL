@@ -131,9 +131,9 @@ var uploader = new plupload.Uploader({
 	browse_button : 'pickfiles',
 	container: 'container',
 	<!--- max_file_size : '70mb', --->
-	url : '#request.WebRootLocation#model/userService.cfc?method=UploadFileCall',
+	url : '#request.WebRootLocation#model/productService.cfc?method=UploadFileCall',
 	dragdrop : true,
-	multi_selection: false,
+	multi_selection: true,
 	drop_element: "container",
 	enctype:"multipart/form-data",
     max_file_size: '10485760mb',
@@ -149,10 +149,7 @@ uploader.bind('Init', function(up, params) {
 
 uploader.bind('FilesAdded', function(up, files) {
 	console.log( 'FilesAdded' );
-	console.log(files);
-	
-	if (files.length == 1) {
-		console.log("IN");
+
 		var isImageOK=true;
 		for (var i in files) {
 			//Remove from file name everything except letters, numbers, !, . and space
@@ -244,14 +241,6 @@ uploader.bind('FilesAdded', function(up, files) {
 
 
 		} // end for
-	} else {
-		alert("You can upload only one image!");
-		for (var j in files) {
-			up.removeFile( files[j] );	
-			files = [];		
-		}
-		console.log("Files: "+files);
-	}
 	
 	
 });
@@ -266,8 +255,13 @@ uploader.bind('UploadProgress', function(up, file) {
 });
 
 uploader.bind('FileUploaded', function(up, file, response) {
-	console.log(file.id+', '+ response);
-	$("##file").val(file.name);
+	console.log(file.id+', '+file.name+', '+ response);
+	var x = file.name.split('.');
+	if($("##file").val() == "") {
+		$("##file").val(file.id+'.'+x[(x.length)-1]);
+	} else {
+		$("##file").val($("##file").val()+','+file.id+'.'+x[(x.length)-1]);
+	}
 	$('##'+file.id).remove();  // Remove from view
 	this.removeFile( file );  // Remove from queue
 	$( "##progressbar" ).progressbar( "value", 100 );
@@ -276,8 +270,7 @@ uploader.bind('FileUploaded', function(up, file, response) {
 });
 
 uploader.bind('UploadComplete', function(up, file) {
-	console.log('UploadComplete');
-	console.log(file);
+	console.log($("##file").val());
 	window.opener.resultFromPopup($("##file").val());
 	window.close(); 
 });

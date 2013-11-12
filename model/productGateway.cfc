@@ -36,7 +36,7 @@
 			);			
 		</cfquery>
 
-		<cfif arguments.product.getCategoryUID neq "">
+		<cfif arguments.product.getCategoryUID() neq "">
 			<cfquery name="qInsertLookups" datasource="#getDSN()#">
 				insert into Products2CategoriesLookup (ProductUID, CategoryUID) values (
 					'#uid#'
@@ -44,6 +44,22 @@
 				);
 			</cfquery>					
 		</cfif>
+
+		<cfif arguments.product.getProductPhotos() neq "">
+			<cfset imagesList = arguments.product.getProductPhotos() />
+
+			<cfloop list="#imagesList#" index="i">
+				<cfquery name="qInsertProductPhotos" datasource="#getDSN()#">
+					insert into ProductImages (ProductImageUID, ProductUID, ImageFile) values (
+						uuid()
+						,<cfqueryparam cfsqltype="cf_sql_varchar" value="#uid#" />
+						,<cfqueryparam cfsqltype="cf_sql_varchar" value="#i#" />
+					);
+				</cfquery>
+			</cfloop>
+		</cfif>
+
+		
 		<cfreturn uid />
 	</cffunction>
 
@@ -67,11 +83,31 @@
 				delete from Products2CategoriesLookup where ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />;
 			</cfquery>
 			<cfquery name="qInsertLookups" datasource="#getDSN()#">
-				insert into Products2CategoriesLookup values (
+				insert into Products2CategoriesLookup (ProductUID, CategoryUID) values (
 					<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />
 					,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getCategoryUID()#" />
 				);
 			</cfquery>				
+		</cfif>
+
+		<cfif arguments.product.getProductPhotos() neq "">
+			<cfset imagesList = arguments.product.getProductPhotos() />
+			
+			<cfquery name="qDeleteProductPhotos" datasource="#getDSN()#">		
+				delete from ProductImages where ProductUID='#arguments.product.getProductUID()#';
+			</cfquery>
+
+
+			<cfloop list="#imagesList#" index="i">
+				<cfquery name="qInsertProductPhotos" datasource="#getDSN()#">					
+					insert into ProductImages (ProductImageUID, ProductUID, ImageFile) values (
+						uuid()
+						,'#arguments.product.getProductUID()#'
+						,'#i#'
+					);
+				</cfquery>
+			</cfloop>				
+
 		</cfif>
 
 		<cfreturn uid />
@@ -126,6 +162,15 @@
 					and p.ProductUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
 			</cfquery>	
 
+			<cfquery name="qProductImages" datasource="#getDSN()#">
+				select
+					ImageFile
+				from
+					ProductImages
+				where
+					ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />	
+			</cfquery>
+
 			<cfif qry.recordCount eq 1>
 				<cfset product.setupProduct(
 					productUID=qry.ProductUID
@@ -133,6 +178,7 @@
 					,productDescription=qry.ProductDescription
 					,dateCreated=qry.dateCreated
 					,categoryUID=qry.CategoryUID
+					,productPhotos=valueList(qProductImages.ImageFile,',')
 					,active=qry.active
 				) />
 			</cfif>
@@ -211,7 +257,12 @@
 
 		<cfquery name="qry" datasource="#getDSN()#">
 			delete from Products where ProductUID = '#arguments.product.getProductUID()#';
+		</cfquery>
+		<cfquery name="qry" datasource="#getDSN()#">
 			delete from Products2CategoriesLookup where ProductUID='#arguments.product.getProductUID()#';
+		</cfquery>
+		<cfquery name="qry" datasource="#getDSN()#">
+			delete from ProductImages where ProductUID='#arguments.product.getProductUID()#';
 		</cfquery>
 
 		<cfreturn 1 />

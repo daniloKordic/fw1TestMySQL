@@ -66,12 +66,12 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>##</th>
-						<th>Menu Item Level</th>
-						<th>Menu Title</th>
-						<th>Sort</th>
-						<th>Action</th>
-						<th style="width: 36px;"></th>
+						<th style="text-align:center;width:50px;">##</th>
+						<th style="text-align:center;width:140px;">Menu Item Level</th>
+						<th style="text-align:center;width:440px;">Menu Title</th>
+						<th style="text-align:center;width:60px;">Sort</th>
+						<th style="text-align:center;width:300px;">Action</th>
+						<th style="width: 56px;"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -80,12 +80,14 @@
 							<cfif rc.menu.menuitemlevel eq 1>						
 								<cfset tMenuItemUID = rc.menu.menuitemuid />
 								<tr>
-									<td>#rc.menu.currentRow#</td>
-									<td>#rc.menu.menuitemlevel#</td>
-									<td>#rc.menu.menuTitle#</td>
-									<td>#rc.menu.sort#</td>
-									<td>#rc.menu.action#</td>
-									<td>
+									<td style="text-align:center;">#rc.menu.currentRow#</td>
+									<td style="text-align:center;">#rc.menu.menuitemlevel#</td>
+									<td style="text-align:center;">
+										<a href="index.cfm?action=menu.manage&uid=#tMenuItemUID#">#rc.menu.menuTitle#</a>
+									</td>
+									<td style="text-align:center;">#rc.menu.sort#</td>
+									<td style="text-align:center;">#rc.menu.action#</td>
+									<td style="text-align:center;">
 										<a href="index.cfm?action=menu.manage&uid=#tMenuItemUID#"><i class="icon-pencil"></i></a>
 										<a href="##" onClick="deleteMenuItem('#tMenuItemUID#')"><i class="icon-remove"></i></a>
 									</td>
@@ -94,12 +96,14 @@
 									<cfif rc.menu.ParentMenuItemUID eq tMenuItemUID>
 										<cfset ttMenuItemUID = rc.menu.MenuItemUID />
 										<tr>
-											<td>#rc.menu.currentRow#</td>
-											<td>#rc.menu.menuitemlevel#</td>
-											<td>#rc.menu.menuTitle#</td>
-											<td>#rc.menu.sort#</td>
-											<td>#rc.menu.action#</td>
-											<td>
+											<td style="text-align:center;">#rc.menu.currentRow#</td>
+											<td style="text-align:center;">#rc.menu.menuitemlevel#</td>
+											<td style="text-align:center;">
+												<a href="index.cfm?action=menu.manage&uid=#ttMenuItemUID#">#rc.menu.menuTitle#</a>
+											</td>
+											<td style="text-align:center;">#rc.menu.sort#</td>
+											<td style="text-align:center;">#rc.menu.action#</td>
+											<td style="text-align:center;">
 												<a href="index.cfm?action=menu.manage&uid=#ttMenuItemUID#"><i class="icon-pencil"></i></a>
 												<a href="##" onClick="deleteMenuItem('#ttMenuItemUID#')"><i class="icon-remove"></i></a>
 											</td>
@@ -108,12 +112,14 @@
 											<cfset tttMenuItemUID = rc.menu.MenuItemUID />
 											<cfif rc.menu.ParentMenuItemUID eq ttMenuItemUID>
 												<tr>
-													<td>#rc.menu.currentRow#</td>
-													<td>#rc.menu.menuitemlevel#</td>
-													<td>#rc.menu.menuTitle#</td>
-													<td>#rc.menu.sort#</td>
-													<td>#rc.menu.action#</td>
-													<td>
+													<td style="text-align:center;">#rc.menu.currentRow#</td>
+													<td style="text-align:center;">#rc.menu.menuitemlevel#</td>
+													<td style="text-align:center;">
+														<a href="index.cfm?action=menu.manage&uid=#tttMenuItemUID#">#rc.menu.menuTitle#</a>
+													</td>
+													<td style="text-align:center;">#rc.menu.sort#</td>
+													<td style="text-align:center;">#rc.menu.action#</td>
+													<td style="text-align:center;">
 														<a href="index.cfm?action=menu.manage&uid=#tttMenuItemUID#"><i class="icon-pencil"></i></a>
 														<a href="##" onClick="deleteMenuItem('#tttMenuItemUID#')"><i class="icon-remove"></i></a>
 													</td>

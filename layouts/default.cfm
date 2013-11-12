@@ -15,9 +15,8 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/datepicker.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.2.custom.css"/>
 		<link href="assets/css/style.css" rel="stylesheet" media="screen">
-		<link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox.css" />
-		<link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox-buttons.css" />
-		<link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox-thumbs.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/colorbox.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/slimbox2.css">
 
 		<script type="text/javascript" src="assets/js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="assets/js/jquery.validate.js"></script>
@@ -27,10 +26,8 @@
 		<script src="assets/bootstrap/js/jasny-bootstrap.min.js"></script>
 		<script type="text/javascript" src="assets/js/global.js"></script>
 		<script type="text/javascript" src="assets/js/twitter-bootstrap-hover-dropdown.min.js"></script>
-		<script type="text/javascript" src="assets/js/jquery.fancybox.pack.js"></script>
-		<script type="text/javascript" src="assets/js/jquery.fancybox-buttons.js" /></script>
-		<script type="text/javascript" src="assets/js/jquery.fancybox-thumbs.js" /></script>
-		<script type="text/javascript" src="assets/js/jquery.fancybox-media.js" /></script>
+		<script type="text/javascript" src="assets/js/jquery.colorbox-min.js"></script>
+		<script type="text/javascript" src="assets/js/slimbox2.js"></script>
 	</head>
 	<body>
 		<cfif not isDefined("rc.modal")>				
@@ -49,9 +46,12 @@
 								<ul class="nav">
 									
 			                	<!--- MENU --->
+			                	<cfif isDefined("rc.menu")>
+			                		
+			                	
 			                	<cfloop query="#rc.menu#">		                		
 			                		<cfset tMenuItemUID="#MenuItemUID#" />
-			                		<cfif tMenuItemUID eq "3981D4BE-1A4E-4899-A919-ACB01383B8BA" and session.auth.TypeID eq 1>
+			                		<cfif tMenuItemUID eq "5a5c7630-46d6-11e3-8610-e1e8e9d46ea6" and session.auth.TypeID eq 1>
 			        
 				                		<cfif MenuItemLevel eq 1>
 				                			<cfif  isParent gt 0>  				
@@ -83,7 +83,7 @@
 					                		</cfif>
 				                		</cfif>
 
-				                	<cfelseif tMenuItemUID neq "3981D4BE-1A4E-4899-A919-ACB01383B8BA">
+				                	<cfelseif tMenuItemUID neq "5a5c7630-46d6-11e3-8610-e1e8e9d46ea6">
 				                		<cfif MenuItemLevel eq 1>
 				                			<cfif  isParent gt 0>  				
 					                			<li class="dropdown">
@@ -115,6 +115,8 @@
 				                		</cfif>
 				                	</cfif>
 			                	</cfloop>
+
+			                	</cfif>
 		                	</ul>		                
 								<ul class="nav pull-right">
 
@@ -158,13 +160,13 @@
 			<div class="row">
 				#body#
 			</div>
-			<cfif isDefined("rc.modal") and rc.modal neq 1>		
+			<cfif not isDefined("rc.modal")>		
 				<hr>
 				<footer>
 					<p>&copy; danilokordic.com 2013</p>
 				</footer>
 			</cfif>
-		</div>		
+		</div>	
 	</body>
 	</html>
 

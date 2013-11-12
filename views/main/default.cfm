@@ -32,6 +32,9 @@
 				<div class="well" style="padding: 8px 0;">
 				    <div style="overflow-y: scroll; overflow-x: hidden; height: 430px;">
 				        <ul class="nav nav-list">
+				        	<cfif isDefined("rc.categories")>
+				        		
+				        	
 				        		<cfloop query="#rc.categories#">
 				        			<cfif parentUID eq "">
 				        				<cfset tCategoryUID = CategoryUID />
@@ -74,6 +77,8 @@
 				        				<li class="divider"></li>					        				
 				        			</cfif>
 				        		</cfloop>
+
+				        	</cfif>
 				        </ul>
 				    </div>
 				</div>
@@ -98,7 +103,7 @@
 			</div>
 		</div>
 	</div>
-<cfdump var="#rc#"/>
+
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('label.tree-toggler').click(function () {

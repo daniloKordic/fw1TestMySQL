@@ -6,7 +6,9 @@
 		variables.instance.productDescription="";
 		variables.instance.dateCreated="";
 		variables.instance.active=0;
+		variables.instance.numProductPhotos=0;
 		variables.instance.categoryUID="";
+		variables.instance.productPhotos="";
 	</cfscript>
 
 	<cffunction name="init" access="public" output="false" returntype="product">
@@ -57,6 +59,14 @@
 		<cfreturn variables.instance.active />
 	</cffunction>
 
+	<cffunction name="setNumProductPhotos" access="public" output="false">
+		<cfargument name="numProductPhotos" type="Numeric" required="true" />
+		<cfset variables.instance.numProductPhotos = arguments.numProductPhotos />
+	</cffunction>
+	<cffunction name="getNumProductPhotos" access="public" output="false" returntype="Numeric">
+		<cfreturn variables.instance.numProductPhotos />
+	</cffunction>
+
 	<cffunction name="setCategoryUID" access="public" output="false">
 		<cfargument name="categoryUID" type="string" required="true" />
 		<cfset variables.instance.categoryUID = arguments.categoryUID />
@@ -65,20 +75,32 @@
 		<cfreturn variables.instance.categoryUID />
 	</cffunction>
 
+	<cffunction name="setProductPhotos" access="public" output="false">
+		<cfargument name="productPhotos" type="string" required="true" />
+		<cfset variables.instance.productPhotos = arguments.productPhotos />
+	</cffunction>
+	<cffunction name="getProductPhotos" access="public" output="false" returntype="string">
+		<cfreturn variables.instance.productPhotos />
+	</cffunction>
+
 	<cffunction name="setupProduct" access="public" output="false" returntype="void">
 		<cfargument name="productUID" required="false" type="string" default="" />
 		<cfargument name="productName" required="false" type="string" default="" />
 		<cfargument name="productDescription" required="false" type="string" default="" />
 		<cfargument name="dateCreated" required="false" type="string" default="" />
 		<cfargument name="active" required="false" type="numeric" default="0" />
+		<cfargument name="numProductPhotos" required="false" type="numeric" default="0" />
 		<cfargument name="categoryUID" required="false" type="string" default="" />
+		<cfargument name="productPhotos" required="false" type="string" default="" />
 
 		<cfset setProductUID(arguments.productUID) />
 		<cfset setProductName(arguments.productName) />
 		<cfset setProductDescription(arguments.productDescription) />
 		<cfset setDateCreated(arguments.dateCreated) />
 		<cfset setActive(arguments.active) />
+		<cfset setNumProductPhotos(arguments.numProductPhotos) />
 		<cfset setCategoryUID(arguments.categoryUID) />
+		<cfset setProductPhotos(arguments.productPhotos) />
 	</cffunction>
 
 	<cffunction name="reset" access="public" output="false" returntype="void">
@@ -87,7 +109,9 @@
 		<cfset setProductDescription("") />
 		<cfset setdateCreated("") />
 		<cfset setActive(0) />
+		<cfset setNumProductPhotos(0) />
 		<cfset setCategoryUID("") />
+		<cfset setProductPhotos("") />
 	</cffunction>
 
 </cfcomponent>

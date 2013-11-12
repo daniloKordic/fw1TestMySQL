@@ -197,7 +197,6 @@
     		<cfdirectory action="create" directory="#application.TempImagesDir#">
 		</cfif>
 
-
 	<!--- Chunks mambodzambo --->
 	    <cfscript>
 	      var uploadFile =  uploadDir & arguments.NAME;
@@ -213,7 +212,7 @@
 	    <!--- save file data from multi-part form.FILE --->
 	    <cffile action="upload" result="fileResult" filefield="file" destination="#uploadFile#" nameconflict="overwrite"/>
 			
-	    <cfscript>
+	     <cfscript>
 	       
 	      response['size'] = fileResult.fileSize;
 	      response['type'] = fileResult.contentType;
@@ -263,7 +262,7 @@
 		<cfset var dest="#application.ImagesDir#">
 		<cfset var relDest="../Images/">
 		
-	
+
 		<cfset var savedFileUID =  insert("-", CreateUUID(), 23)  /><!--- Stupid cf uid is not compatibile with MSSQL uid --->
 
 		<cfif not directoryExists(dest)><cfdirectory action="create" directory="#dest#"></cfif>

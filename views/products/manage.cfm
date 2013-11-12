@@ -1,20 +1,36 @@
 <cfoutput>
 
+	<cfset fProductUID=""/>
+	<cfset fProductName=""/>
+	<cfset fProductDescription=""/>
+	<cfset fIsActive=""/>
+	<cfset fCategoryUID=""/>
+	<cfset fNumProductPhotos="0"/>
+	<cfset fProductImages=""/>
+	<cfset qCategory = "" />
+
 	<cfset fProductUID="#rc.event.product.getProductUID()#"/>
 	<cfset fProductName="#rc.event.product.getProductName()#"/>
 	<cfset fProductDescription="#rc.event.product.getProductDescription()#"/>
 	<cfset fIsActive="#rc.event.product.getActive()#"/>
 	<cfset fCategoryUID="#rc.event.product.getCategoryUID()#"/>
+	<cfset fNumProductPhotos="#rc.event.product.getNumProductPhotos()#"/>
+	<cfset fProductImages="#rc.event.product.getProductPhotos()#"/>
 	<cfset qCategory = "#rc.event.Categories#" />
 
 <script type="text/javascript">
 
-		$(document).ready(function() {
-
-			$(".fancybox").fancybox({
-				openEffect: 'none',
-				closeEffect: 'none'
-			});
+		$(document).ready(function() {			
+			path = '#application.ImagesDirRel#';
+			
+			$("a[rel^='lightbox']").slimbox({
+				overlayOpacity: 0.6,
+				counterText: "Image {x} of {y}",
+				closeKeys: [27, 70],
+				nextKeys: [39, 83]
+			}, null, function(el) {
+					return (this == el) || ((this.rel.length > 8) && (this.rel == el.rel));
+				});
 
 			$('##manageProduct').validate(
 			{
@@ -75,6 +91,37 @@
 		function submitForm() {
 			$("##manageProduct").submit();
 		}
+
+		function modalWin(uid) {
+		
+			var result=window.showModalDialog("index.cfm?action=products.image&uid="+uid+"&modal=1","Upload",
+				"dialogWidth:860px;dialogHeight:650px");
+				console.log(result);
+		}
+		function resultFromPopup(message){
+			console.log('Popup returned: ' + message);
+			var numImages = $("##numProductPhotos").val();
+			if (message) {
+				var imagesArr = message.split(',');
+				var numPhotos = $("##numProductPhotos").val();				
+				$("##numProductPhotos").val(parseInt(numPhotos)+parseInt(imagesArr.length));
+				for (var i=0; i<imagesArr.length; i++) {					
+					$("##ProductImagess").append("<a rel='lightbox' title='some title' href='#application.ImagesDirRel#"+imagesArr[i]+"'><img style='max-width:200px;margin:10px 5px;' alt='' src='#application.ImagesDirRel#"+imagesArr[i]+"' /><input type='hidden' id='productImage_"+(parseInt(numPhotos)+i+1)+"' name='productImage' value='"+imagesArr[i]+"' /></a>");
+				}
+
+				$("a[rel^='lightbox']").slimbox({
+					overlayOpacity: 0.6,
+					counterText: "Image {x} of {y}",
+					closeKeys: [27, 70],
+					nextKeys: [39, 83]
+				}, null, function(el) {
+					return (this == el) || ((this.rel.length > 8) && (this.rel == el.rel));
+				});				
+				
+			}
+			
+			//jsusr.getFile();
+		}
 	</script>
 
 	<style type="text/css">
@@ -91,20 +138,16 @@
 			padding: 2px 8px;
 			margin-top: 2px;
 		}
-		.fancybox img {
-			max-height: 100px;
-			max-width: 200px;
-			margin-bottom: 4px;
-			display: block;
-		}
-		.fancybox {
-			display: inline-block;
+		.cboxPhoto {
+			max-width: 800px;
+			max-height: 600px;
 		}
 	</style>
 
 	<form class="form-horizontal" action="#buildUrl('products.manage')#" method="POST" id="manageProduct" name="manageProduct">
 		<input type="hidden" id="fsw" name="fsw" value=""/>
 		<input type="hidden" id="productUID" name="productUID" value="#fProductUID#" />
+		<input type="hidden" id="numProductPhotos" name="numProductPhotos" value="#listLen(fProductImages)#"/>
 
 		<cfif rc.event.result.message neq "" and rc.event.result.message neq "">
 			<div class="alert alert-info expired">
@@ -174,20 +217,30 @@
 						</div>
 					</div>
 					<div class="span6 pull-down-50">
-						<p style="display: block;">
-							<a class="fancybox" rel="gallery1" href="http://farm6.staticflickr.com/5471/9036958611_fa1bb7f827_b.jpg" title="Westfield Waterfalls - Middletown CT Lower (Graham_CS)">
-								<img src="http://farm6.staticflickr.com/5471/9036958611_fa1bb7f827_m.jpg" alt="" />
-							</a>
-							<a class="fancybox" rel="gallery1" href="http://farm4.staticflickr.com/3824/9041440555_2175b32078_b.jpg" title="Calm Before The Storm (One Shoe Photography Ltd.)">
-								<img src="http://farm4.staticflickr.com/3824/9041440555_2175b32078_m.jpg" alt="" />
-							</a>
-							<a class="fancybox" rel="gallery1" href="http://farm3.staticflickr.com/2870/8985207189_01ea27882d_b.jpg" title="Lambs Valley (JMImagesonline.com)">
-								<img src="http://farm3.staticflickr.com/2870/8985207189_01ea27882d_m.jpg" alt="" />
-							</a>
-							<a class="fancybox" rel="gallery1" href="http://farm4.staticflickr.com/3677/8962691008_7f489395c9_b.jpg" title="Grasmere Lake (Phil 'the link' Whittaker (gizto29))">
-								<img src="http://farm4.staticflickr.com/3677/8962691008_7f489395c9_m.jpg" alt="" />
-							</a>
-						</p>
+						<div class="row margin-top-0 padding-top-0 padding-right-0 padding-left-0 white" style="padding:0 !important;">
+							<div class="tabtitle width-100 margin-bottom-10 margin-top-0">
+								Product Images
+							</div>
+							<div class="backgrey-100">
+								<div id="ProductImages" style="clear:both;text-align:center;">
+									<p style="display:block;" id="ProductImagess">
+										<cfif fProductImages neq "">
+											<cfset ix = 1/>
+											<cfloop list="#fProductImages#" index="i">
+												<a rel='lightbox' title='some title' href='#application.ImagesDirRel##i#'>
+													<img style='max-width:200px;margin:10px 5px;' alt='' src='#application.ImagesDirRel##i#' />
+													<input type='hidden' id='productImage_#ix#' name='productImage' value='' /></a>
+													<cfset ix = ix + 1 />
+											</cfloop>
+										</cfif>
+									</p>
+								</div>
+							<div class="clear"></div>
+						</div>
+						<div class="clear"></div>
+						<div>
+							<button type="button" class="btn btn-default right margin-right-10 margin-bottom-10" name="addImage" id="addImage" type="button" onclick="modalWin('#fProductUID#')">Add Images</button>
+						</div>
 					</div>
 				</div>
 			</div>
