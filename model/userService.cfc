@@ -36,7 +36,7 @@
 		<cfargument name="form" type="any" required="true" />
 
 		<cfscript>
-			var user = createObject("component", "model.user").init();		
+			var user = createObject("component", "fw1Test.model.user").init();		
 			var userUID="";
 			var firstName="";
 			var lastName="";
@@ -143,7 +143,7 @@
 		</cfif>
 
 		<cfif not isStruct(result)>
-			<cfset result = createObject("component", "model.user").init() />
+			<cfset result = createObject("component", "fw1Test.model.user").init() />
 		</cfif>
 
 		<cfreturn result />

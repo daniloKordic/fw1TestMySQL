@@ -30,14 +30,19 @@
 	</cffunction>
 	
 	<cffunction name="default">
+		<cfargument name="rc" type="struct" required="true" />
+
 		<cfset var categoryService = getCategoriesService() />
 		<cfset var productService = getProductsService() />
 		<cfset var rc.categories = categoryService.getCategories() />
 
-		<cfif structKeyExists(rc, "uid")>
-			<cfset var rc.products = productService.getProducts(uid=rc.uid) />
+		<cfif structKeyExists(arguments.rc, "uid")>
+			<cfset arguments.rc.products = productService.getProducts(uid=rc.uid) />
+		<cfelseif structKeyExists(rc, "cuid")>
+			<cfset var rc.products = productService.getProductsByCategory(cuid=rc.cuid) />	
+		
 		<cfelse>
-			<cfset var rc.products = productService.getProducts() />	
+			<cfset arguments.rc.products = productService.getProducts() />	
 		</cfif>
 		
 	</cffunction>

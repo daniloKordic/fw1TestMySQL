@@ -1,14 +1,26 @@
 <cfoutput>
 	<cfajaxproxy cfc="#application.com#.userService" jsclassname="jsobj_usr" />
 
-	<cfset fUserUID="#rc.event.user.getUID()#" />
-	<cfset fFirstName="#rc.event.user.getFirstName()#" />
-	<cfset fLastName="#rc.event.user.getLastName()#" />
-	<cfset fEmail="#rc.event.user.getEmail()#" />
-	<cfset fUsername="#rc.event.user.getUsername()#"/>
-	<cfset fPassword="#rc.event.user.getPassword()#" />
-	<cfset fActive="#rc.event.user.getIsActive()#"/>
-	<cfset fUserImage="#rc.event.user.getUserImage()#"/>
+	<cfset fUserUID="" />
+	<cfset fFirstName="" />
+	<cfset fLastName="" />
+	<cfset fEmail="" />
+	<cfset fUsername=""/>
+	<cfset fPassword="" />
+	<cfset fActive=""/>
+	<cfset fUserImage=""/>	
+
+	<cfif structKeyExists(rc, "event")>
+		<cfset fUserUID="#rc.event.user.getUID()#" />
+		<cfset fFirstName="#rc.event.user.getFirstName()#" />
+		<cfset fLastName="#rc.event.user.getLastName()#" />
+		<cfset fEmail="#rc.event.user.getEmail()#" />
+		<cfset fUsername="#rc.event.user.getUsername()#"/>
+		<cfset fPassword="#rc.event.user.getPassword()#" />
+		<cfset fActive="#rc.event.user.getIsActive()#"/>
+		<cfset fUserImage="#rc.event.user.getUserImage()#"/>	
+	</cfif>
+	
 
 	<script type="text/javascript">
 

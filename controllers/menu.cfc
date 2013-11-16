@@ -19,19 +19,22 @@
 	</cffunction>
 
 	<cffunction name="default" access="public" returntype="void">
+		<cfargument name="rc" type="struct" required="true" />
+		
 		<cfset var menuService = getMenuService() />
-		<cfset rc.menu = menuService.getMenu() />
+		<cfset arguments.rc.menu = menuService.getMenu() />
 	</cffunction>
 
 	<cffunction name="manage" access="public" returntype="void">
+		<cfargument name="rc" type="struct" required="true" />
 
 		<cfif structKeyExists(rc, "fsw") and Len(rc.fsw)>
-			<cfset var rc.event = menuService.HandleForm(form) />
+			<cfset arguments.rc.event = menuService.HandleForm(form) />
 		<cfelse>
- 			<cfset var rc.event = menuService.HandleRequest(url) />
+ 			<cfset arguments.rc.event = menuService.HandleRequest(url) />
 		</cfif>
 
-		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "delete" or rc.fsw eq "save" or rc.fsw eq "update") >
+		<cfif structKeyExists(arguments.rc, "fsw") and (arguments.rc.fsw eq "delete" or arguments.rc.fsw eq "save" or arguments.rc.fsw eq "update") >
 			<cfset variables.fw.redirect("menu", "event") />			
 		</cfif>
 	</cffunction>

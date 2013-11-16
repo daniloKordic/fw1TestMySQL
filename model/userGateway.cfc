@@ -62,7 +62,7 @@
 		<cfargument name="uid" required="true" type="any" />
 
 		<cfset var qry=""/>
-		<cfset var user = createObject("component","model.user").init() />
+		<cfset var user = createObject("component","fw1Test.model.user").init() />
 
 		<cfif arguments.uid neq "">
 			<cfquery name="qry" datasource="#getDSN()#">
@@ -94,7 +94,7 @@
 	<cffunction name="getByEmail" access="public" output="false" returntype="any">
 		<cfargument name="email" required="true" type="string" />
 		<cfset var qry="" />
-		<cfset var user = createObject("component","model.user").init() />
+		<cfset var user = createObject("component","fw1Test.model.user").init() />
 		<cfif arguments.email neq "">
 			<cfquery name="qry" datasource="#getDSN()#">
 				select

@@ -162,7 +162,7 @@
 		<cfargument name="uid" required="false" type="String" default="" />
 
 		<cfset var qry="" />
-		<cfset var menuItem = createObject("component","model.menu").init() />
+		<cfset var menuItem = createObject("component","fw1Test.model.menu").init() />
 
 		<cfif arguments.uid neq "">
 			<cfquery name="qry" datasource="#getDSN()#">

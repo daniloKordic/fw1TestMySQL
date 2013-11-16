@@ -26,16 +26,17 @@
 	</cffunction>
 
 	<cffunction name="register" access="public" output="false" returntype="void">
-		
+		<cfargument name="rc" type="struct" required="true" />
+
 		<cfset var userService = getUserService() />
 
-		<cfif structKeyExists(rc, "fsw") and Len(rc.fsw)>
+		<cfif structKeyExists(arguments.rc, "fsw") and Len(arguments.rc.fsw)>
 			<cfset var event = getUserService().handleForm(form) />
 		<cfelse>
 			<cfset variables.fw.redirect("register") />
 		</cfif>
 		
-		<cfset rc = structAppend(rc, event) />
+		<cfset variables.rc = structAppend(variables.rc, event) />
 
 	</cffunction>
 

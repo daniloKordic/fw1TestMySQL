@@ -56,7 +56,7 @@
 		<cfargument name="form" type="any" required="true" />
 
 		<cfscript>
-			var product = createObject("component","model.product").init();
+			var product = createObject("component","fw1Test.model.product").init();
 			var productUID = "";
 			var productName = "";
 			var productDescription = "";

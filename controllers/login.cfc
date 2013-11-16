@@ -27,23 +27,23 @@
 		<cfset var user = ""/>
 
 		<!--- if missing variables redirect to login form --->
-		<cfif not structKeyExists(rc, "email") or not structKeyExists(rc, "password")>
+		<cfif not structKeyExists(arguments.rc, "email") or not structKeyExists(arguments.rc, "password")>
 			<cfset variables.fw.redirect("main") />
 		</cfif>
 
 		<!--- if all data ok, lookup user --->
-		<cfset user = userService.getByEmail(rc.email) />
-
+		<cfset user = userService.getByEmail(arguments.rc.email) />
+		
 		<!--- if all good, check password --->
 		<cfif len(user.getUID())>
-			<cfset userValid = userService.validatePassword(user, rc.password) />
+			<cfset userValid = userService.validatePassword(user, arguments.rc.password) />
 		</cfif>
 
 		<cfif not userValid>
-			<cfset rc.message = "Invalid Username or Password" />
+			<cfset arguments.rc.message = "Invalid Username or Password" />
 			<cfset variables.fw.redirect("main","message") />
 		<cfelse>
-			<cfset rc.message = "Login Successfull!" />
+			<cfset arguments.rc.message = "Login Successfull!" />
 		</cfif>
 
 		<!--- since all ok, set sessoin variables --->
@@ -64,7 +64,7 @@
 		<cfset session.auth.fullName = "Guest" />
 		<cfset session.auth.TypeID = 3 />
 		<cfset structDelete(session.auth,"user") />
-		<cfset rc.message = "You have safely logged out!" />
+		<cfset arguments.rc.message = "You have safely logged out!" />
 		<cfset variables.fw.redirect("main","message") />
 	</cffunction>
 	

@@ -56,7 +56,7 @@
 		<cfargument name="form" required="true" type="any" default="" />
 		
 		<cfscript>
-			var category = createObject("component","model.category").init();
+			var category = createObject("component","fw1Test.model.category").init();
 			var tCategoryUID="";
 			var tCategoryName="";
 			var tCategoryDetails="";

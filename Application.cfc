@@ -3,28 +3,29 @@
 	<cfset this.sessiontimeout = createTimeSpan(0, 1, 0, 0) />
 
 	<cfset variables.framework.reloadApplicationOnEveryRequest = true />
-	<cfset variables.framework.suppressImplicitSerice = true />
+	<cfset variables.framework.suppressImplicitSerice = true />	
 
 	<cffunction name="setupApplication">
-		<cfset application.dsn = "fw1TestMySQL"/>
+		<cfset application.dsn = "fw1Test"/>
 
 		<!--- get local path --->
 		<cfset application.basePath = getDirectoryFromPath(getCurrentTemplatePath()) />
 				
 
 		<!--- initialize coldspring --->
-		<cfset application.coldspringConfig = "/fw1TestMySQL/assets/config/coldspring.xml.cfm" />
+		<cfset application.coldspringConfig = "#application.basePath#assets\config\coldspring.xml.cfm" />
 
 		<cfscript>
 			application.settings = {
-				dsn = "fw1TestMySQL"
+				dsn = "fw1Test"
 			};
 		</cfscript>
 		
-
 		<!--- initialize singleton components --->
 		<cfset application.beanFactory = createObject("component","coldspring.beans.DefaultXmlBeanFactory").init(defaultProperties=application.settings) />
-		<cfset application.beanFactory.loadBeans("/fw1TestMySQL/assets/config/coldspring.xml.cfm") />
+		<cfset application.beanFactory.loadBeans("#application.basePath#assets\config\coldspring.xml.cfm") />		
+		
+
 		
 		<cfset application.assets = "assets/"/>
 		<cfset application.model = "#application.basePath#model\"/>
@@ -38,7 +39,7 @@
 			<cfdirectory action="Create" directory="#application.TempImagesDir#">
 		</cfif>
 
-		<cfset application.com = "fw1TestMySQL.model" />
+		<cfset application.com = "fw1Test.model" />
 
 	</cffunction>
 

@@ -19,23 +19,33 @@
 	</cffunction>
 
 	<cffunction name="default" access="public" returntype="void">
+		<cfargument name="rc" type="struct" required="true" />
+
 		<cfset var productService = getProductService() />
-		<cfset rc.qGrid = productService.handleGrid(url) />
+		<cfset arguments.rc.qGrid = productService.handleGrid(url) />
 	</cffunction>
 
 	<cffunction name="manage" access="public" returntype="void">
-		
+		<cfargument name="rc" type="struct" required="true" />
+
 		<cfset var productService = getProductService() />
 
-		<cfif structKeyExists(rc, "fsw") and Len(rc.fsw)>
-			<cfset var rc.event = productService.HandleForm(form) />
+		<cfif structKeyExists(arguments.rc, "fsw") and Len(arguments.rc.fsw)>
+			<cfset arguments.rc.event = productService.HandleForm(form) />
 		<cfelse>
-			<cfset var rc.event = productService.HandleRequest(url) />
+			<cfset arguments.rc.event = productService.HandleRequest(url) />
 		</cfif>		
 
-		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "delete" or rc.fsw eq "save" or rc.fsw eq "update")>
+		<cfif structKeyExists(arguments.rc, "fsw") and (arguments.rc.fsw eq "delete" or arguments.rc.fsw eq "save" or arguments.rc.fsw eq "update")>
 			<cfset variables.fw.redirect("products","event") />
 		</cfif>
 	</cffunction>
 
+	<cffunction name="view" access="public" returntype="void">
+		<cfset var productService = getProductService() />
+
+		<cfif structKeyExists(rc, "uid")>
+			<cfset var rc.product = productService.getProducts(uid=rc.uid) />					
+		</cfif>
+	</cffunction>
 </cfcomponent>

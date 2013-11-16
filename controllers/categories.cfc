@@ -26,16 +26,17 @@
 	</cffunction>
 
 	<cffunction name="manage" access="public" returntype="void">
-		
+		<cfargument name="rc" type="struct" required="true" />
+
 		<cfset var categoryService = getCategoryService() />
 
-		<cfif structKeyExists(rc, "fsw") and Len(rc.fsw)>
-			<cfset var rc.event = categoryService.HandleForm(form) />
+		<cfif structKeyExists(arguments.rc, "fsw") and Len(arguments.rc.fsw)>
+			<cfset arguments.rc.event = categoryService.HandleForm(form) />
 		<cfelse>
-			<cfset var rc.event = categoryService.HandleRequest(url) />
+			<cfset arguments.rc.event = categoryService.HandleRequest(url) />
 		</cfif>
 
-		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "delete" or rc.fsw eq "save" or rc.fsw eq "update")>
+		<cfif structKeyExists(arguments.rc, "fsw") and (arguments.rc.fsw eq "delete" or arguments.rc.fsw eq "save" or arguments.rc.fsw eq "update")>
 			<cfset variables.fw.redirect("categories","event") />
 		</cfif>
 	</cffunction>

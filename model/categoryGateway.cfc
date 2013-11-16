@@ -121,7 +121,7 @@
 		<cfargument name="uid" required="true" type="any" />
 
 		<cfset var qry=""/>
-		<cfset var category = createObject("component","model.category").init() />
+		<cfset var category = createObject("component","fw1Test.model.category").init() />
 
 		<cfif arguments.uid neq "">
 			<cfquery name="qry" datasource="#getDSN()#">

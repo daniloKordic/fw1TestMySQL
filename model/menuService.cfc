@@ -38,7 +38,7 @@
 		<cfargument name="form" type="any" required="true" default="" />
 
 		<cfscript>
-			var menuItem = createObject("component","model.menu").init();
+			var menuItem = createObject("component","fw1Test.model.menu").init();
 			var menuItemUID="";
 			var menuTitle="";
 			var menuAction="";

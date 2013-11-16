@@ -144,7 +144,7 @@
 	<cffunction name="getByKey" access="public" output="false" returntype="any">
 		<cfargument name="uid" type="any" required="true" />
 		<cfset qry = ""/>
-		<cfset var product = createObject("component", "model.product").init() />
+		<cfset var product = createObject("component", "fw1Test.model.product").init() />
 
 		<cfif arguments.uid neq "">
 			<cfquery name="qry" datasource="#getDSN()#">
