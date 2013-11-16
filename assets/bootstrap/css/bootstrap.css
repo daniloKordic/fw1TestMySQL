@@ -449,9 +449,19 @@ a:focus {
   *width: 65.90425531914893%;
 }
 
+.row-fluid .span7New {
+  width: 59.44680851063829%;
+  *width: 59.39361702127659%;
+}
+
 .row-fluid .span7 {
   width: 57.44680851063829%;
   *width: 57.39361702127659%;
+}
+
+.row-fluid .span6New {
+  width: 54.93617021276595%;
+  *width: 54.88297872340425%;
 }
 
 .row-fluid .span6 {
@@ -469,9 +479,19 @@ a:focus {
   *width: 31.861702127659576%;
 }
 
+.row-fluid .span3New {
+  width: 21.404255319148934%;
+  *width: 21.351063829787233%;
+}
+
 .row-fluid .span3 {
   width: 23.404255319148934%;
   *width: 23.351063829787233%;
+}
+
+.row-fluid .span2New {
+  width: 16.893617021276595%;
+  *width: 16.840425531914894%;
 }
 
 .row-fluid .span2 {

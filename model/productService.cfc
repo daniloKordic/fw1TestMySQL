@@ -126,9 +126,25 @@
 
 	<cffunction name="getProducts" access="public" output="false" returntype="any">
 		<cfargument name="uid" default="" type="string" required="false" />
+		<cfargument name="count" type="numeric" required="false" default="0" />
 		<cfset var products = ""/>
 
-		<cfset products = getProductGateway().getProducts(uid=arguments.uid) />
+		<cfif arguments.uid neq "">
+			<cfset products = getProductGateway().getByUID(uid=arguments.uid) />
+		<cfelse>	
+			<cfset products = getProductGateway().getProducts(count=arguments.count) />
+		</cfif>
+
+		<cfreturn products />
+	</cffunction>
+
+	<cffunction name="getProductsByCategory" access="public" output="false" returntype="any">
+		<cfargument name="cuid" required="false" type="string" default="" />
+		<cfset var products=""/>
+
+		<cfif arguments.cuid neq "">
+			<cfset products = getProductGateway().getByCategory(cuid=arguments.cuid) />
+		</cfif>
 
 		<cfreturn products />
 	</cffunction>
@@ -231,7 +247,24 @@
 		<cffile 
 		    action = "move" 
 		    source = "#uploadFile#" 
+		    destination = "#dest#original\#arguments.NAME#">
+
+		<!--- <cffile action="delete" source="" /> --->
+
+		<cffile 
+		    action = "copy" 
+		    source = "#dest#original\#arguments.NAME#" 
 		    destination = "#dest##arguments.NAME#">
+
+		<cfimage source="#dest##arguments.NAME#" name="myImage">
+		<cfset ImageScaleToFit(myImage,200,"","highestPerformance")>
+
+		<cfimage 
+		    action = "write" 
+		    destination = "#dest##arguments.NAME#" 
+		    source = "#myImage#" 
+		    overwrite = "yes" 
+		    quality = "1">
 		 		 		
 	</cffunction>
 </cfcomponent>

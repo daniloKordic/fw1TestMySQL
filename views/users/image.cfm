@@ -131,14 +131,14 @@ var uploader = new plupload.Uploader({
 	browse_button : 'pickfiles',
 	container: 'container',
 	<!--- max_file_size : '70mb', --->
-	url : '#request.WebRootLocation#model/userService.cfc?method=UploadFileCall',
+	url : 'model/userService.cfc?method=UploadFileCall',
 	dragdrop : true,
 	multi_selection: false,
 	drop_element: "container",
 	enctype:"multipart/form-data",
     max_file_size: '10485760mb',
     chunk_size: '15mb',
-    unique_names: true
+    unique_names: false
 
 });
 

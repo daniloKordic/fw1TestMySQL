@@ -21,7 +21,7 @@
 			select
 				u.*
 			from
-				Users u  
+				Users u 
 		</cfquery>
 
 		<cfreturn qry />
@@ -69,7 +69,7 @@
 				select
 					u.*
 				from
-					Users u  
+					Users u 
 				where
 					userUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
 			</cfquery>
@@ -84,6 +84,8 @@
 					,isActive=qry.isActive
 					,TypeID=qry.TypeID
 					,UserImage=qry.UserImage
+					,Address=qry.Address
+					,Timezone=qry.Timezone
 					) />
 			</cfif>
 		</cfif>
@@ -107,8 +109,10 @@
 					,u.isActive
 					,u.typeID
 					,u.userImage
+					,u.Address
+					,u.Timezone
 				from
-					Users u  
+					Users u 
 				WHERE
 					u.email=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#" />
 					and u.isActive=1
@@ -124,7 +128,9 @@
 					Password=qry.password,
 					IsActive=qry.isActive,
 					TypeID=qry.typeID,
-					UserImage=qry.userImage
+					UserImage=qry.userImage,
+					Address=qry.Address,
+					Timezone=qry.Timezone
 				) />
 			</cfif>
 		</cfif>
@@ -137,12 +143,12 @@
 		<cfargument name="user" required="true" type="any" />
 		<cfset var qry=""/>
 		<cfquery name="qry" datasource="#getDSN()#">
-			select  uuid() as newUID
+			select newid() as newUID
 		</cfquery>
 		<cfset var uid = qry.newUID/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			insert into Users (
+			insert into users (
 				 userUID
 				,FirstName
 				,LastName
@@ -152,6 +158,8 @@
 				,isActive
 				,typeID
 				,userImage
+				,Address
+				,Timezone
 			) values(
 				<cfqueryparam cfsqltype="cf_sql_varchar" value="#uid#" />
 				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getFirstname()#" />
@@ -162,6 +170,8 @@
 				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIsActive()#" />
 				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getTypeID()#" />
 				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUserImage()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getAddress()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getTimezone()#" />
 			)
 		</cfquery>
 
@@ -182,6 +192,8 @@
 			,password=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getPassword()#" />
 			,isActive=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getIsActive()#" />
 			,userImage=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUserImage()#" />
+			,address=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getAddress()#" />
+			,timezone=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getTimezone()#" />
 			WHERE UserUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
 		</cfquery>
 
@@ -208,7 +220,7 @@
 		<cfset qry=""/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			delete from Users where useruid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
+			delete from users where useruid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
 		</cfquery>
 
 		<cfreturn 1 />
@@ -220,7 +232,7 @@
 		<cfset var result = ""/>
 
 		<cfquery name="confirmAccount" datasource="#getDSN()#">
-			update Users
+			update users
 			set isActive=1
 			where userUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userUID#" />
 		</cfquery>

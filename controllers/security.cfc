@@ -8,9 +8,10 @@
 	<cffunction name="authorize">
 		<cfargument name="rc" type="any" required="true" />
 		<cfif not session.auth.isLoggedIn and 	not listFindNoCase('main', variables.fw.getSection() ) and
-															not listFindNoCase('register', variables.fw.getSection()) and
-															not listFindNoCase('login', variables.fw.getSection()) and
-															not listFindNoCase('main.error', variables.fw.getFullyQualifiedAction() )>
+												not listFindNoCase('register', variables.fw.getSection()) and
+												not listFindNoCase('login', variables.fw.getSection()) and
+												not listFindNoCase('products', variables.fw.getSection()) and
+												not listFindNoCase('main.error', variables.fw.getFullyQualifiedAction() )>
 			<cfset variables.fw.redirect('main') />
 		</cfif>
 	</cffunction>

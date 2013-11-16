@@ -131,7 +131,7 @@ var uploader = new plupload.Uploader({
 	browse_button : 'pickfiles',
 	container: 'container',
 	<!--- max_file_size : '70mb', --->
-	url : '#request.WebRootLocation#model/productService.cfc?method=UploadFileCall',
+	url : 'model/productService.cfc?method=UploadFileCall',
 	dragdrop : true,
 	multi_selection: true,
 	drop_element: "container",

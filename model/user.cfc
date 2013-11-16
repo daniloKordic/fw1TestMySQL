@@ -10,6 +10,8 @@
 		variables.instance.IsActive = 0;
 		variables.instance.TypeID = 2;
 		variables.instance.UserImage = "";
+		variables.instance.address="";
+		variables.instance.timezone="";
 	</cfscript>
 
 	<cffunction name="init" access="public" output="false" returntype="user">
@@ -92,6 +94,22 @@
 		<cfreturn variables.instance.UserImage />
 	</cffunction>
 
+	<cffunction name="setAddress" access="public" output="false">
+		<cfargument name="Address" type="string" required="true" />
+		<cfset variables.instance.address = arguments.address />
+	</cffunction>
+	<cffunction name="getAddress" access="public" returntype="String" output="false">
+		<cfreturn variables.instance.address />
+	</cffunction>
+
+	<cffunction name="setTimezonee" access="public" output="false">
+		<cfargument name="Timezone" type="string" required="true" />
+		<cfset variables.instance.timezone = arguments.Timezone />
+	</cffunction>
+	<cffunction name="getTimezone" access="public" returntype="String" output="false">
+		<cfreturn variables.instance.timezone />
+	</cffunction>
+
 	<cffunction name="setupUser" access="public" output="false" returntype="void">
 		<cfargument name="UID" required="false" type="string" default="" />
 		<cfargument name="FirstName" required="false" type="string" default="" />
@@ -102,6 +120,8 @@
 		<cfargument name="IsActive" required="false" type="numeric" default="0" />
 		<cfargument name="TypeID" required="false" type="numeric" default="2" />
 		<cfargument name="UserImage" required="false" type="string" default="" />
+		<cfargument name="Address" required="false" type="string" default="" />
+		<cfargument name="Timezone" required="false" type="string" default="" />
 
 		<cfset setUID(arguments.UID)>
 		<cfset setFirstName(arguments.FirstName)>
@@ -112,6 +132,8 @@
 		<cfset setIsActive(arguments.IsActive)>
 		<cfset setTypeID(arguments.TypeID)>
 		<cfset setUserImage(arguments.UserImage)>
+		<cfset setAddress(arguments.Address)>
+		<cfset setTimezonee(arguments.Timezone)>
 	</cffunction>
 
 	<cffunction name="reset" access="public" output="false" returntype="void">
@@ -124,6 +146,8 @@
 		<cfset setIsActive(0)>
 		<cfset setTypeID(2)>
 		<cfset setUserImage('')>
+		<cfset setAddress('')>
+		<cfset setTimezone('')>
 	</cffunction>
 
 </cfcomponent>

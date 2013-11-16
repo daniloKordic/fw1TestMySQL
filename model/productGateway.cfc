@@ -93,11 +93,6 @@
 		<cfif arguments.product.getProductPhotos() neq "">
 			<cfset imagesList = arguments.product.getProductPhotos() />
 			
-			<cfquery name="qDeleteProductPhotos" datasource="#getDSN()#">		
-				delete from ProductImages where ProductUID='#arguments.product.getProductUID()#';
-			</cfquery>
-
-
 			<cfloop list="#imagesList#" index="i">
 				<cfquery name="qInsertProductPhotos" datasource="#getDSN()#">					
 					insert into ProductImages (ProductImageUID, ProductUID, ImageFile) values (
@@ -206,27 +201,74 @@
 	</cffunction>
 
 	<cffunction name="getProducts" output="false" access="public" returntype="query">
-		<cfargument name="uid" type="string" required="false" default="" />
+		<cfargument name="uid" type="String" required="false" default="" />	
+		<cfargument name="count" type="numeric" required="false" default="0" />
 		<cfset var qry=""/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			select * from (
-				select
-					p.ProductUID
-					,p.ProductName
-					,p.ProductDescription
-					,p.active				
-					,(select CategoryUID from Products2CategoriesLookup p2c   where p2c.ProductUID=p.ProductUID) as CategoryUID
-				from
-					Products p  
+			SELECT 
+				p.ProductUID
+				,p.ProductName
+				,p.ProductDescription
+				,p.active
+				,(SELECT CategoryUID
+					FROM Products2CategoriesLookup
+					WHERE ProductUID = p.ProductUID
+					) AS CategoryUID
+				,(SELECT ImageFile
+					FROM ProductImages
+					WHERE ProductUID = p.ProductUID
+					LIMIT 1
+				) AS mainImage
+			FROM 
+				Products p
+			WHERE 
+				p.active =1
 				<cfif arguments.uid neq "">
-					where
-						1=1
-						and p.ProductUID in (select ProductUID from Products2CategoriesLookup where CategoryUID='#arguments.uid#')
+					and p.ProductUID in (select ProductUID from Products2CategoriesLookup where CategoryUID='#arguments.uid#')
 				</cfif>
+			<cfif arguments.count neq 0>
+				limit #arguments.count#
+			</cfif>
+		</cfquery>
+		<cfreturn qry />
+	</cffunction>
+
+	<cffunction name="getByUID" output="false" access="public" returntype="query">
+		<cfargument name="uid" type="String" required="false" default="" />		
+		<cfset var qry=""/>
+
+		<cfquery name="qImages" datasource="#getDSN()#">
+			select
+				ImageFile
+			from
+				ProductImages
+			where
+				ProductUID='#arguments.uid#'
+		</cfquery>
+
+		<cfset imagesList = valueList(qImages.ImageFile) />
+
+		<cfquery name="qry" datasource="#getDSN()#">
+			select 
+				tbl.*
+				,'#imagesList#' as images
+			from (			
+			select
+				p.ProductUID
+				,p.ProductName
+				,p.ProductDescription
+				,p.active
+				,(select CategoryUID from Products2CategoriesLookup where ProductUID=p.ProductUID) as CategoryUID
+				,(select ImageFile from ProductImages where ProductUID = p.ProductUID limit 1) as mainImage
+			from
+				Products p			
 			) tbl
 			where
-				tbl.active = 1
+				1=1
+				<cfif arguments.uid neq "">
+					and tbl.ProductUID = '#arguments.uid#'
+				</cfif>
 		</cfquery>
 		<cfreturn qry />
 	</cffunction>
@@ -247,6 +289,36 @@
 				tbl.hasChildren = 0
 		</cfquery>
 
+		<cfreturn qry />
+	</cffunction>
+
+	<cffunction name="getByCategory" output="false" access="public" returntype="query">
+		<cfargument name="cuid" type="String" required="false" default="" />		
+		<cfset var qry=""/>
+
+		<cfquery name="qry" datasource="#getDSN()#">
+			
+			SELECT 
+				tbl.*
+				,'' as images
+			from (			
+			select
+				p.ProductUID
+				,p.ProductName
+				,p.ProductDescription
+				,p.active
+				,p.datecreated
+				,(select CategoryUID from Products2CategoriesLookup where ProductUID=p.ProductUID) as CategoryUID
+				,(select ImageFile from ProductImages where ProductUID = p.ProductUID limit 1) as mainImage
+			from
+				Products p
+			) tbl
+			where
+				1=1
+				<cfif arguments.cuid neq "">
+					and tbl.CategoryUID = '#arguments.cuid#'
+				</cfif>
+		</cfquery>
 		<cfreturn qry />
 	</cffunction>
 

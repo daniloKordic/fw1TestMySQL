@@ -142,7 +142,7 @@
 		<div class="control-group">
 		  <label class="control-label" for="parentMenuItemUID">Select Parent</label>
 		  <div class="controls">
-		    <select id="parentMenuItemUID" name="parentMenuItemUID" class="input-medium" <cfif fHasChildren eq 1>disabled</cfif>>
+		    <select id="parentMenuItemUID" name="parentMenuItemUID" class="input-medium">
 		    	<option value="">Please select</option>
 		      <cfloop query="qParentMenus">
 		      	<option value="#MenuItemUID#" <cfif fParentUID eq MenuItemUID >selected</cfif>>#MenuTitle#</option>
@@ -171,7 +171,9 @@
 		<div class="control-group">
 		  <label class="control-label" for="saveBtn"></label>
 		  <div class="controls">
-		    <button id="saveBtn" name="saveBtn" class="btn btn-success" type="button">Save</button>
+		    <button id="saveBtn" name="saveBtn" class="btn btn-success" type="button">
+		    	<cfif fMenuItemUID neq "">Update<cfelse>Save</cfif>
+		    </button>
 		    <button id="cancelBtn" name="cancelBtn" class="btn btn-danger" type="button">Cancel</button>
 		    <button id="deleteBtn" name="deleteBtn" class="btn btn-danger" type="button">Delete</button>
 		    <button id="backBtn" name="backBtn" class="btn btn-info" type="button">Back</button>

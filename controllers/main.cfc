@@ -34,12 +34,12 @@
 
 		<cfset var categoryService = getCategoriesService() />
 		<cfset var productService = getProductsService() />
-		<cfset var rc.categories = categoryService.getCategories() />
+		<cfset arguments.rc.categories = categoryService.getCategories() />
 
 		<cfif structKeyExists(arguments.rc, "uid")>
 			<cfset arguments.rc.products = productService.getProducts(uid=rc.uid) />
 		<cfelseif structKeyExists(rc, "cuid")>
-			<cfset var rc.products = productService.getProductsByCategory(cuid=rc.cuid) />	
+			<cfset arguments.rc.products = productService.getProductsByCategory(cuid=rc.cuid) />	
 		
 		<cfelse>
 			<cfset arguments.rc.products = productService.getProducts() />	
