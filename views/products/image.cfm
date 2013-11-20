@@ -1,3 +1,5 @@
+
+
 <cfset fSOIVersionUID="" />
 <cfset fPCVersionUID="" />
 <cfset GraphicsType=""/>
@@ -246,3 +248,95 @@ uploader.bind('FilesAdded', function(up, files) {
 function imageError(fileId){
 	removeUploadedFilebyId(fileId);
 	alert('Image corrupted!');
+}
+
+uploader.bind('UploadProgress', function(up, file) {
+	$('##span'+file.id).text(file.percent + "%");
+});
+
+uploader.bind('FileUploaded', function(up, file, response) {
+	console.log(file.id+', '+file.name+', '+ response);
+	var x = file.name.split('.');
+	if($("##file").val() == "") {
+		$("##file").val(file.id+'.'+x[(x.length)-1]);
+	} else {
+		$("##file").val($("##file").val()+','+file.id+'.'+x[(x.length)-1]);
+	}
+	$('##'+file.id).remove();  // Remove from view
+	this.removeFile( file );  // Remove from queue
+	$( "##progressbar" ).progressbar( "value", 100 );
+	
+	//alert(response);
+});
+
+uploader.bind('UploadComplete', function(up, file) {
+	console.log($("##file").val());
+	window.opener.resultFromPopup($("##file").val());
+	window.close(); 
+});
+
+
+uploader.bind('BeforeUpload', function(up, file) {
+
+// Additional params to send with uploaded file
+	up.settings.multipart_params = {
+                            "type": params.type,
+<!---                        "format": $('##'+file.id+' td select').val(), --->
+                           	"format": '0',
+                            "description": $('##'+file.id+' td textarea').val(),
+                            "PCVersionUID": '#fPCVersionUID#',
+                            "SOIVersionUID": '#fSOIVersionUID#',
+                            "Sector": params.Sector
+                            
+                        };
+});
+
+document.getElementById('uploadfiles').onclick = function() {
+	uploader.start();
+	return false;
+};
+
+uploader.bind('UploadProgress', function(up, file) {
+	console.log(file.percent);
+	 $( "##progressbar" ).progressbar( "value", file.percent );
+	if(file.percent == 100)  $( "##progressbar" ).progressbar( "value", 100 ); //$('##SketchMainImgProgress').text('Upload finished.');;
+});
+
+uploader.init();
+
+
+//helper functions
+function removeUploadedFile(fid){
+	var id =  $(fid).parent().parent().parent().prop('id') ;
+	console.log( id );
+	var file = uploader.getFile(id);
+	$('##'+id).remove();
+	uploader.removeFile( file );
+}
+function removeUploadedFilebyId(id){
+	var file = uploader.getFile(id);
+	$('##'+id).remove();
+	uploader.removeFile( file );
+}
+
+
+ function bntUploadClick(){
+
+	// creating an instance of the proxy class. 
+	//var jspc = new jsobj_pcg();
+	// Setting a callback handler for the proxy automatically makes
+	// the proxy's calls asynchronous.
+	//jspc.setCallbackHandler(callbckimefje);
+	// Setting the Error Handler to handle error
+	//jspc.setErrorHandler(globalErrorHandler);
+	//Invoke our cold fusion component method and pass the parameters
+	//jspc.UploadFileCall('tip5');
+}
+function callbckimefje(nekiresponce){
+	console.log(nekiresponce);
+}
+if ( window.chrome) $('##pickfiles').hide();
+</script>
+
+</cfoutput>
+

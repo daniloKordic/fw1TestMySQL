@@ -19,7 +19,7 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/colorbox.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/slimbox2.css">
-		<link rel="stylesheet" type="text/css" href="assets/css/blueimp-gallery.css">	    
+		<!--- <link rel="stylesheet" type="text/css" href="assets/css/blueimp-gallery.css"> --->	    
 		<link rel="stylesheet" type="text/css" media="all" href="assets/css/styles.css">
 		<link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.lightbox-0.5.css">	
 	</head>

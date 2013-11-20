@@ -50,4 +50,14 @@
 			<cfset arguments.rc.product = productService.getProducts(uid=arguments.rc.uid) />					
 		</cfif>
 	</cffunction>
+
+	<cffunction name="test" access="public" returntype="void">
+		<cfargument name="rc" type="struct" required="true" />
+
+		<cfset var productService = getProductService() />
+
+		<cfif structKeyExists(arguments.rc, "uid")>
+			<cfset arguments.rc.product = productService.getProducts(uid=arguments.rc.uid) />					
+		</cfif>
+	</cffunction>
 </cfcomponent>

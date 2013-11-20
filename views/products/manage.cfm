@@ -248,3 +248,15 @@
                                                             </ul>
                                                         </div>
                                                     <div class="clear"></div>
+                                                </div>
+                                                <div class="clear"></div>
+                                                <div>
+                                                    <button type="button" class="btn btn-default right margin-right-10 margin-bottom-10" name="addImage" id="addImage" type="button" onclick="modalWin('#fProductUID#')">Add Images</button>
+                                                </div>                                                
+                                        </div>
+                                </div>
+                        </div>
+                </fieldset>
+        </form>
+
+</cfoutput>
