@@ -87,6 +87,7 @@
 					,Address=qry.Address
 					,Timezone=qry.Timezone
 					,Phone=qry.phone
+					,TypeID=qry.typeID
 					) />
 			</cfif>
 		</cfif>
@@ -200,6 +201,7 @@
 			,address=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getAddress()#" />
 			,timezone=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getTimezone()#" />
 			,phone=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getPhone()#" />
+			,typeID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getTypeID()#" />
 			WHERE UserUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
 		</cfquery>
 

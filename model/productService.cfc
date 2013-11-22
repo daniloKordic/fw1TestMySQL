@@ -13,6 +13,8 @@
 	<cffunction name="handleGrid" access="public" output="false" returntype="any">
 		<cfargument name="url" type="any" required="true" />
 
+		<cfset fUserUID = ""/>
+
 		<cfscript>
 			var grid = {
 				pageNumber=1
@@ -28,8 +30,9 @@
 		<cfif structKeyExists(arguments.url, "orderBy")><cfset grid.orderBy = arguments.url.orderBy /></cfif>
 		<cfif structKeyExists(arguments.url, "orderDirection")><cfset grid.orderDirection = arguments.url.orderDirection /></cfif>
 		<cfif structKeyExists(arguments.url, "start")><cfset grid.start = arguments.url.start /></cfif>
+		<cfif structKeyExists(arguments.url, "uuid")><cfset fUserUID = arguments.url.uuid /></cfif>
 
-		<cfreturn getProductGateway().getGrid(grid=grid) />
+		<cfreturn getProductGateway().getGrid(grid=grid, uid=fUserUID) />
 	</cffunction>
 
 	<cffunction name="HandleRequest" access="public" output="false" returntype="any">
@@ -63,7 +66,8 @@
 			var isActive = 0;
 			var numProductPhotos = 0;
 			var categoryUID = "";
-			var productPhotos = "";			
+			var productPhotos = "";	
+			var createdBy="";		
 		</cfscript>
 
 		<cfif structKeyExists(arguments.form, "productUID")><cfset productUID=arguments.form.productUID /></cfif>
@@ -73,6 +77,7 @@
 		<cfif structKeyExists(arguments.form, "numProductPhotos")><cfset numProductPhotos=arguments.form.numProductPhotos /></cfif>
 		<cfif structKeyExists(arguments.form, "categoryUID")><cfset categoryUID=arguments.form.categoryUID /></cfif>
 		<cfif structKeyExists(arguments.form, "productImage")><cfset productPhotos=arguments.form.productImage /></cfif>
+		<cfif structKeyExists(arguments.form, "createdBy")><cfset createdBy=arguments.form.createdBy /></cfif>
 
 		<cfset product.setupProduct (
 			productUID=productUID
@@ -82,6 +87,7 @@
 			,active=isActive
 			,numProductPhotos=numProductPhotos
 			,productPhotos=productPhotos
+			,createdBy=createdBy
 		) />
 		
 		<cfif structKeyExists(arguments.form, "fsw")>

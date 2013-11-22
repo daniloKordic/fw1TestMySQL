@@ -8,6 +8,7 @@
 	<cfset fUsername=""/>
 	<cfset fPassword="" />
 	<cfset fActive=""/>
+	<cfset fTypeID=""/>
 	<cfset fUserImage=""/>
 	<cfset fAddress=""/>
 	<cfset fTimezone=""/>
@@ -20,6 +21,7 @@
 		<cfset fEmail="#rc.event.user.getEmail()#" />
 		<cfset fUsername="#rc.event.user.getUsername()#"/>
 		<cfset fPassword="#rc.event.user.getPassword()#" />
+		<cfset fTypeID="#rc.event.user.getTypeID()#"/>
 		<cfset fActive="#rc.event.user.getIsActive()#"/>
 		<cfset fUserImage="#rc.event.user.getUserImage()#"/>
 		<cfset fAddress="#rc.event.user.getAddress()#"/>
@@ -188,8 +190,6 @@
 									    <input id="username" name="username" class="input-xlarge" type="text" value="#fUsername#">			    
 									  </div>
 									</div>
-						            <!--- <label>Username</label>
-						            <input name="username" id="username" type="text" value="#fUsername#" class="input-xlarge"> --->
 
 						            <cfif fUserUID eq "">
 						            	<div class="control-group">
@@ -206,8 +206,6 @@
 									    <input id="firstName" name="firstName" class="input-xlarge" type="text" value="#fFirstName#">			    
 									  </div>
 									</div>										
-						            <!--- <label>First Name</label>
-						            <input type="text" value="#fFirstName#" class="input-xlarge"> --->
 
 						            <div class="control-group">
 									  <label class="control-label" for="lastName">Last Name:</label>
@@ -215,33 +213,40 @@
 									    <input id="lastName" name="lastName" class="input-xlarge" type="text" value="#fLastName#">			    
 									  </div>
 									</div>
-						            <!--- <label>Last Name</label>
-						            <input type="text" value="#fLastName#" class="input-xlarge"> --->
-
+						            
 						            <div class="control-group">
 									  <label class="control-label" for="email">Email:</label>
 									  <div class="controls">
 									    <input id="email" name="email" class="input-xlarge" type="text" value="#fEmail#">			    
 									  </div>
 									</div>
-						            <!--- <label>Email</label>
-						            <input type="text" value="#fEmail#" class="input-xlarge"> --->
-
+						            
 						            <div class="control-group">
 									  <label class="control-label" for="address">Address:</label>
 									  <div class="controls">
 									  	<textarea id="address" name="address" rows="3" class="input-xlarge">#fAddress#</textarea>
 									  </div>
 									</div>
-						            <!--- <label>Address</label>
-						            <textarea value="#fAddress#" rows="3" class="input-xlarge"></textarea> --->
-
+						            
 						            <div class="control-group">
 									  <label class="control-label" for="phone">Phone:</label>
 									  <div class="controls">
 									    <input id="phone" name="phone" class="input-xlarge" type="text" value="#fPhone#">			    
 									  </div>
 									</div>
+									
+									<cfif session.auth.TypeID eq 1>
+										<div class="control-group">
+										  <label class="control-label" for="userType">User Type:</label>
+										  <div class="controls">
+										    <select name="typeID" id="typeID" class="input-xlarge">
+							              		<option value="">Please select...</option>		    
+							              		<option value="2" <cfif fTypeID eq 2>selected</cfif>>Registered User</option>
+							              		<option value="4" <cfif fTypeID eq 4>selected</cfif>>Company</option>
+							              	</select>
+										  </div>
+										</div>	
+									</cfif>
 
 						            <div class="control-group">
 										  <label class="control-label" for="timezonee">Time Zone:</label>
@@ -310,83 +315,10 @@
 									    <input id="password" name="password" class="input-xlarge" type="password" value="#fPassword#">			    
 									  </div>
 									</div>
-						    	</cfif>						    		
-						        	<!--- <label>New Password</label>
-						        	<input type="password" class="input-xlarge" value="#fPassword#"> --->						        	
-						        	<!--- <div>
-						        		<br/>
-						        	    <button class="btn btn-primary">Update</button>
-						        	</div> --->
-						    	<!--- </form> --->
+						    	</cfif>			
 						      </div>
 						  </div>
-						<!---
-						<!-- Text input-->
-						<div class="control-group">
-						  <label class="control-label" for="firstName">First Name:</label>
-						  <div class="controls">
-						    <input id="firstName" name="firstName" class="input-large" type="text" value="#fFirstName#">			    
-						  </div>
-						</div>
-
-						<!-- Text input-->
-						<div class="control-group">
-						  <label class="control-label" for="lastname">Last Name:</label>
-						  <div class="controls">
-						    <input id="lastName" name="lastName" class="input-large" type="text" value="#fLastName#">		    
-						  </div>
-						</div>
-
-						<!-- Text input-->
-						<div class="control-group">
-						  <label class="control-label" for="email">Email:</label>
-						  <div class="controls">
-						    <input id="email" name="email" class="input-large" type="text" value="#fEmail#">			    
-						  </div>
-						</div>
-
-						<!-- Text input-->
-						<div class="control-group">
-						  <label class="control-label" for="username">Username:</label>
-						  <div class="controls">
-						    <input id="username" name="username" class="input-large" type="text" value="#fUsername#">		    
-						  </div>
-						</div>
-
-						<!-- Password input-->
-						<div class="control-group">
-						  <label class="control-label" for="password">Password:</label>
-						  <div class="controls">
-						    <input id="password" name="password" class="input-large" type="password" value="#fPassword#">	    
-						  </div>
-						</div>
-
-						<cfif session.auth.TypeID eq 1>
-							<div class="control-group">
-							  <label class="control-label" for="radios">User Status</label>
-							  <div class="controls">
-							    <label class="radio" for="radios-0">
-							      <input name="active" id="radios-0" value="1" type="radio" <cfif fActive eq 1>checked</cfif>>
-							      Active
-							    </label>
-							    <label class="radio" for="radios-1">
-							      <input name="active" id="radios-1" value="0" type="radio" <cfif fActive eq 0>checked</cfif>>
-							      Inactive
-							    </label>
-							  </div>
-							</div>
-						</cfif>
-						---
-						<div class="control-group">
-							<!-- Button -->
-							<div class="controls">
-								<button type="submit" class="btn btn-success" name="updateUser" id="updateUser"><cfif fUserUID eq "">Save<cfelse>Update</cfif></button>
-								<cfif session.auth.TypeID eq 1>
-									<button type="button" class="btn btn-danger" name="deleteUser" id="deleteUser">Delete</button>
-								</cfif>					
-								<button type="button" class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
-							</div>
-						--->
+						
 						</div>
 					</div>
 					<div class="span6 pull-down-50">

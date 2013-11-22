@@ -27,12 +27,14 @@
 				,ProductDescription
 				,dateCreated
 				,active
+				,createdBy
 			) values (
 				'#uid#'
 				,'#arguments.product.getProductName()#'
 				,'#arguments.product.getProductDescription()#'
 				,NOW()
 				,#arguments.product.getActive()#
+				,'#arguments.product.getCreatedBy()#'
 			);			
 		</cfquery>
 
@@ -123,6 +125,7 @@
 	<!--- READ --->
 	<cffunction name="getGrid" access="public" output="false" returntype="Query">
 		<cfargument name="grid" type="any" required="true" />
+		<cfargument name="uid" type="String" required="false" default="" />
 
 		<cfset var qry = "" />
 
@@ -149,6 +152,7 @@
 					,p.productDescription
 					,p.dateCreated
 					,p.active
+					,p.createdBy
 					,(select CategoryUID from Products2CategoriesLookup where ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />) as CategoryUID
 				from
 					Products p  
@@ -175,6 +179,7 @@
 					,categoryUID=qry.CategoryUID
 					,productPhotos=valueList(qProductImages.ImageFile,',')
 					,active=qry.active
+					,createdBy=qry.createdBy
 				) />
 			</cfif>
 		</cfif>		

@@ -129,16 +129,21 @@
 											</div>
 										</li>
 									<cfelse>
-					               <li class="dropdown">
-				                    	
-				                    	<a href="##" class="dropdown-toggle" <!--- data-hover="dropdown" ---> data-close-others="true" data-delay="10" data-toggle="dropdown">Welcome, #session.auth.fullname# <b class="caret"></b></a>
-				                        <ul class="dropdown-menu">
-				                            <li><a href="index.cfm?action=users.manage&uid=#session.auth.user.getUID()#"><i class="icon-cog"></i> Preferences</a></li>
-				                            <li><a href="##"><i class="icon-envelope"></i> Contact Support</a></li>
-				                            <li class="divider"></li>
-				                            <li><a href="#buildUrl('login.logout')#"><i class="icon-off"></i> Logout</a></li>
-				                        </ul>
-				                    </li>
+						               <li class="dropdown">
+					                    	
+					                    	<a href="##" class="dropdown-toggle" <!--- data-hover="dropdown" ---> data-close-others="true" data-delay="10" data-toggle="dropdown">Welcome, #session.auth.fullname# <b class="caret"></b></a>
+					                        <ul class="dropdown-menu">
+					                            <li><a href="index.cfm?action=users.manage&uid=#session.auth.user.getUID()#"><i class="icon-cog"></i> Preferences</a></li>
+
+					                            <li><a href="##"><i class="icon-envelope"></i> Contact Support</a></li>
+					                            <cfif session.auth.TypeID eq 4>
+					                            	<li><a href="index.cfm?action=products&uuid=#session.auth.user.getUID()#"><i class="icon-briefcase"></i>Manage Products</a></li>
+					                            </cfif>
+
+					                            <li class="divider"></li>
+					                            <li><a href="#buildUrl('login.logout')#"><i class="icon-off"></i> Logout</a></li>
+					                        </ul>
+					                    </li>
 									</cfif>							
 								</ul>
 							</div>

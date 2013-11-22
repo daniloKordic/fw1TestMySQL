@@ -9,6 +9,7 @@
 		variables.instance.numProductPhotos=0;
 		variables.instance.categoryUID="";
 		variables.instance.productPhotos="";
+		variables.instance.createdBy="";
 	</cfscript>
 
 	<cffunction name="init" access="public" output="false" returntype="product">
@@ -83,6 +84,14 @@
 		<cfreturn variables.instance.productPhotos />
 	</cffunction>
 
+	<cffunction name="setCreatedBy" access="public" output="false">
+		<cfargument name="createdBy" type="string" required="true" />
+		<cfset variables.instance.createdBy = arguments.createdBy />
+	</cffunction>
+	<cffunction name="getCreatedBy" access="public" output="false" returntype="string">
+		<cfreturn variables.instance.createdBy />
+	</cffunction>
+
 	<cffunction name="setupProduct" access="public" output="false" returntype="void">
 		<cfargument name="productUID" required="false" type="string" default="" />
 		<cfargument name="productName" required="false" type="string" default="" />
@@ -92,6 +101,7 @@
 		<cfargument name="numProductPhotos" required="false" type="numeric" default="0" />
 		<cfargument name="categoryUID" required="false" type="string" default="" />
 		<cfargument name="productPhotos" required="false" type="string" default="" />
+		<cfargument name="createdBy" required="false" type="string" default="" />
 
 		<cfset setProductUID(arguments.productUID) />
 		<cfset setProductName(arguments.productName) />
@@ -101,6 +111,7 @@
 		<cfset setNumProductPhotos(arguments.numProductPhotos) />
 		<cfset setCategoryUID(arguments.categoryUID) />
 		<cfset setProductPhotos(arguments.productPhotos) />
+		<cfset setCreatedBy(arguments.createdBy) />
 	</cffunction>
 
 	<cffunction name="reset" access="public" output="false" returntype="void">
@@ -112,6 +123,7 @@
 		<cfset setNumProductPhotos(0) />
 		<cfset setCategoryUID("") />
 		<cfset setProductPhotos("") />
+		<cfset setCreatedBy("") />
 	</cffunction>
 
 </cfcomponent>

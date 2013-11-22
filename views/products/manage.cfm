@@ -7,8 +7,10 @@
         <cfset fCategoryUID=""/>
         <cfset fNumProductPhotos="0"/>
         <cfset fProductImages=""/>
+        <cfset fCreatedBy="#session.auth.user.getUID()#"/>
         <cfset qCategory = "" />
 
+        
         <cfset fProductUID="#rc.event.product.getProductUID()#"/>
         <cfset fProductName="#rc.event.product.getProductName()#"/>
         <cfset fProductDescription="#rc.event.product.getProductDescription()#"/>
@@ -16,6 +18,7 @@
         <cfset fCategoryUID="#rc.event.product.getCategoryUID()#"/>
         <cfset fNumProductPhotos="#rc.event.product.getNumProductPhotos()#"/>
         <cfset fProductImages="#rc.event.product.getProductPhotos()#"/>
+        <cfset fCreatedBy="#rc.event.product.getCreatedBy()#"/>
         <cfset qCategory = "#rc.event.Categories#" />
 
 <script type="text/javascript">
@@ -142,6 +145,7 @@
         <form class="form-horizontal" action="#buildUrl('products.manage')#" method="POST" id="manageProduct" name="manageProduct">
                 <input type="hidden" id="fsw" name="fsw" value=""/>
                 <input type="hidden" id="productUID" name="productUID" value="#fProductUID#" />
+                <input type="hidden" id="createdBy" name="createdBy" value="#fCreatedBy#"/>
                 <input type="hidden" id="numProductPhotos" name="numProductPhotos" value="#listLen(fProductImages)#"/>
 
                 <cfif rc.event.result.message neq "" and rc.event.result.message neq "">

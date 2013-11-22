@@ -32,6 +32,7 @@
     <input type="hidden" id="productUID" name="productUID" value="" />
     
     <div class="well">
+        <button class="btn" id="newProduct" type="button">Add Product</button>
         <table class="table">
           <thead>
             <tr>
