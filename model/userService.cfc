@@ -316,7 +316,7 @@
 	    <cffile action="upload" result="fileResult" filefield="file" destination="#uploadFile#" nameconflict="makeUnique"/>
 			
 		
-	    <!---<cfscript>
+	    <cfscript>
 	       
 	      response['size'] = fileResult.fileSize;
 	      response['type'] = fileResult.contentType;
@@ -357,11 +357,11 @@
 	        }
 	      }
 	      
-	    </cfscript>--->
+	    </cfscript>
 		<!--- End of chunks --->
-		<!---<cfif  (!response['completed'])>
+		<cfif  (!response['completed'])>
 			<cfreturn response>
-		</cfif>--->
+		</cfif>
 		
 		<cfset var dest="#application.ImagesDir#">
 		<cfset var relDest="../Images/">
@@ -371,14 +371,14 @@
 
 		<cfif not directoryExists(dest)><cfdirectory action="create" directory="#dest#"></cfif>
 		
-		<!--- <cffile 
+		<cffile 
 		    action = "move" 
 		    source = "#uploadFile#" 
-		    destination = "#dest#original\#arguments.NAME#"> --->
+		    destination = "#dest#original\#arguments.NAME#">
 
 		<!--- <cffile action="delete" source="" /> --->
 
-		<!--- <cffile 
+		<cffile 
 		    action = "copy" 
 		    source = "#dest#original\#arguments.NAME#" 
 		    destination = "#dest##arguments.NAME#">
@@ -391,7 +391,7 @@
 		    destination = "#dest##arguments.NAME#" 
 		    source = "#myImage#" 
 		    overwrite = "yes" 
-		    quality = "1"> --->
+		    quality = "1">
 		
 
 	</cffunction>

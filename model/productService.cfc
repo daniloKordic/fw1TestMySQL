@@ -159,13 +159,7 @@
 		<cfargument name="IsMainImage" type="numeric" default="0">
 		<cfargument name="Sector" type="string" default="8">
 
-		<cfset var fMaintenanceLogUID=''/>
-
-		<cfif structKeyExists(arguments,"PCVersionUID") and len(arguments.PCVersionUID)>
-			<cfset fMaintenanceLogUID=arguments.PCVersionUID />
-			<cfset var pcmaintenance=variables.pcmaintenanceGateway.getByKey(MaintenanceLogUID=fMaintenanceLogUID) />
-		</cfif>
- 
+		
 		<cfset var uploadDir="#application.TempImagesDir#">
 
 		<cfif not directoryExists(uploadDir)>
