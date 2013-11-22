@@ -12,6 +12,7 @@
 		variables.instance.UserImage = "";
 		variables.instance.address="";
 		variables.instance.timezone="";
+		variables.instance.phone="";
 	</cfscript>
 
 	<cffunction name="init" access="public" output="false" returntype="user">
@@ -110,6 +111,14 @@
 		<cfreturn variables.instance.timezone />
 	</cffunction>
 
+	<cffunction name="setPhone" access="public" output="false">
+		<cfargument name="Phone" type="string" required="true" />
+		<cfset variables.instance.phone = arguments.Phone />
+	</cffunction>
+	<cffunction name="getPhone" access="public" returntype="String" output="false">
+		<cfreturn variables.instance.phone />
+	</cffunction>
+
 	<cffunction name="setupUser" access="public" output="false" returntype="void">
 		<cfargument name="UID" required="false" type="string" default="" />
 		<cfargument name="FirstName" required="false" type="string" default="" />
@@ -122,6 +131,7 @@
 		<cfargument name="UserImage" required="false" type="string" default="" />
 		<cfargument name="Address" required="false" type="string" default="" />
 		<cfargument name="Timezone" required="false" type="string" default="" />
+		<cfargument name="Phone" required="false" type="string" default="" />
 
 		<cfset setUID(arguments.UID)>
 		<cfset setFirstName(arguments.FirstName)>
@@ -134,6 +144,7 @@
 		<cfset setUserImage(arguments.UserImage)>
 		<cfset setAddress(arguments.Address)>
 		<cfset setTimezonee(arguments.Timezone)>
+		<cfset setPhone(arguments.Phone)>
 	</cffunction>
 
 	<cffunction name="reset" access="public" output="false" returntype="void">
@@ -148,6 +159,7 @@
 		<cfset setUserImage('')>
 		<cfset setAddress('')>
 		<cfset setTimezone('')>
+		<cfset setPhone('')>
 	</cffunction>
 
 </cfcomponent>

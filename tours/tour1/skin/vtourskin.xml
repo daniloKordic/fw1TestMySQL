@@ -366,7 +366,8 @@
 	<action name="skin_update_scene_infos">
 		if(xml.scene !== null,
 			if(scene[get(xml.scene)].index GE 0,
-				if(title, txtadd(layer[skin_title].html, get(title), ' - ', get(scene[get(xml.scene)].title) ); , copy(layer[skin_title].html, scene[get(xml.scene)].title ); );
+				<!--if(title, txtadd(layer[skin_title].html, get(title), ' - ', get(scene[get(xml.scene)].title) ); , copy(layer[skin_title].html, scene[get(xml.scene)].title ); );-->
+				copy(layer[skin_title].html, title);
 				delayedcall(0.1, set(layer[skin_title].visible,true) );
 		
 				if(scene[get(xml.scene)].index GT 0,

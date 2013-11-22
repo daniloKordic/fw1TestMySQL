@@ -236,19 +236,6 @@ span.bold {
     font-size: 11px !important;
     font-weight: bold !important;
 }
-/*.imageHolder {
-    min-width: 225px;
-    min-height: 200px;
-    text-align: center;
-    border: 1px solid #BFBFBF;
-    border-radius: 5px;
-    margin: 5px;
-    padding: 5px;
-}
-.imageHolder img {
-    vertical-align: middle;
-    margin: auto 0;
-}*/
 .imageHolder {
     height: 180px;      /* equals max image height */
     width: 185px;
@@ -260,7 +247,6 @@ span.bold {
 }
 
 .helper {
-    //display: inline-block;
     height: 100%;
     vertical-align: middle;
 }
@@ -276,12 +262,7 @@ span.bold {
     width: 40%;
     float: left;
 }
-#productInfo{
-    /*padding-left: 200px;*/
-}
 #pano{
-    width: 55%;
-    height: 500px;
-    padding: 45px 0 0 0;
-    float: left;
+    width: 100%;
+    height: 700px;        
 }

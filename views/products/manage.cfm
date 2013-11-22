@@ -189,26 +189,26 @@
 
                                                 <!-- Multiple Radios (inline) -->
                                                 <div class="control-group">
-                                                        <label class="control-label" for="active">Active</label>
-                                                        <div class="controls">
-                                                         <label class="radio inline" for="radios-1">
-                                                         <input name="active" id="radios-1" value="1" <cfif fIsActive eq 1>checked</cfif> type="radio">
+                                                   <label class="control-label" for="active">Active</label>
+                                                   <div class="controls">
+                                                      <label class="radio inline" for="radios-1">
+                                                      <input name="active" id="radios-1" value="1" <cfif fIsActive eq 1>checked</cfif> type="radio">
                                                          Yes
-                                                         </label>
-                                                         <label class="radio inline" for="radios-0">
-                                                         <input name="active" id="radios-0" value="0" type="radio" <cfif fIsActive eq 0>checked</cfif>>
+                                                      </label>
+                                                      <label class="radio inline" for="radios-0">
+                                                      <input name="active" id="radios-0" value="0" type="radio" <cfif fIsActive eq 0>checked</cfif>>
                                                          No
-                                                         </label>
-                                                        </div>
+                                                      </label>
+                                                   </div>
                                                 </div>
 
                                                 <div class="control-group">
-                                                        <!-- Button -->
-                                                        <div class="controls">
-                                                                <button type="button" class="btn btn-success" name="updateProduct" id="updateProduct"><cfif fProductUID eq "">Save<cfelse>Update</cfif></button>
-                                                                <button type="button" class="btn btn-danger" name="deleteProduct" id="deleteProduct">Delete</button>
-                                                                <button type="button" class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
-                                                        </div>
+                                                   <!-- Button -->
+                                                   <div class="controls">
+                                                      <button type="button" class="btn btn-success" name="updateProduct" id="updateProduct"><cfif fProductUID eq "">Save<cfelse>Update</cfif></button>
+                                                      <button type="button" class="btn btn-danger" name="deleteProduct" id="deleteProduct">Delete</button>
+                                                      <button type="button" class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
+                                                   </div>
                                                 </div>
                                         </div>
                                         <div class="span6 pull-down-50">
@@ -217,20 +217,6 @@
                                                             Product Images
                                                     </div>
                                                     <div class="backgrey-100">
-                                                        <!--- <div id="ProductImages" style="clear:both;text-align:center;">
-                                                            <p style="display:block;" id="ProductImagess">
-                                                                <cfif fProductImages neq "">
-                                                                    <cfset ix = 1/>
-                                                                    <cfloop list="#fProductImages#" index="i">
-                                                                        <a rel='lightbox' title='some title' href='#application.ImagesDirRel#original/#i#'>
-                                                                            <img style='max-width:140px;margin:10px 5px;' alt='' src='#application.ImagesDirRel##i#' />
-                                                                            <input type='hidden' id='productImage_#ix#' name='productImage' value='' />
-                                                                        </a>
-                                                                        <cfset ix = ix + 1 />
-                                                                    </cfloop>
-                                                                </cfif>
-                                                            </p>
-                                                        </div> --->
                                                         <div id="thumbnails">
                                                             <ul class="clearfix ProductImagess" style="margin-left:0 !important;">
                                                                 <cfif fProductImages neq "">

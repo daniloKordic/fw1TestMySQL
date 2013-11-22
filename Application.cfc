@@ -35,6 +35,7 @@
 			<cfdirectory action="Create" directory="#application.ImagesDir#">
 		</cfif>
 		<cfset application.TempImagesDir="#application.basePath#tmpImages\"/>
+		<cfset application.TempImagesDirRel="tmpImages/"/>
 		<cfif not DirectoryExists(application.TempImagesDir)>
 			<cfdirectory action="Create" directory="#application.TempImagesDir#">
 		</cfif>

@@ -11,11 +11,12 @@
 	<cfset fUserImage="#rc.event.user.getUserImage()#"/>
 	<cfset fAddress="#rc.event.user.getAddress()#"/>
 	<cfset fTimezone="#rc.event.user.getTimezone()#"/>
+	<cfset fPhone="#rc.event.user.getPhone()#"/>
 
 	<script type="text/javascript">
 
 		$(document).ready(function(){
-			path = '#application.ImagesDirRel#';
+			path = '#application.TempImagesDirRel#';
 			$('##userRegister').validate(
 			{
 				rules: {
@@ -75,6 +76,7 @@
 			$("##lastName").val("#fLastName#");
 			$("##email").val("#fEmail#");
 			$("##password").val("#fPassword#");
+			$("##phone").val("#fPhone#");
 		}
 		function validateForm() {
 			var error = true;
@@ -162,50 +164,57 @@
 						      <div class="tab-pane active in" id="home">
 						        <!--- <form id="tab"> --->
 
-						        		<div class="control-group">
-										  <label class="control-label" for="username">Username:</label>
-										  <div class="controls">
-										    <input id="username" name="username" class="input-xlarge" type="text" value="#fUsername#">			    
-										  </div>
-										</div>
+					        		<div class="control-group">
+									  <label class="control-label" for="username">Username:</label>
+									  <div class="controls">
+									    <input id="username" name="username" class="input-xlarge" type="text" value="#fUsername#">			    
+									  </div>
+									</div>
 						            <!--- <label>Username</label>
 						            <input name="username" id="username" type="text" value="#fUsername#" class="input-xlarge"> --->
 
 						            <div class="control-group">
-										  <label class="control-label" for="firstName">First Name:</label>
-										  <div class="controls">
-										    <input id="firstName" name="firstName" class="input-xlarge" type="text" value="#fFirstName#">			    
-										  </div>
-										</div>										
+									  <label class="control-label" for="firstName">First Name:</label>
+									  <div class="controls">
+									    <input id="firstName" name="firstName" class="input-xlarge" type="text" value="#fFirstName#">			    
+									  </div>
+									</div>										
 						            <!--- <label>First Name</label>
 						            <input type="text" value="#fFirstName#" class="input-xlarge"> --->
 
 						            <div class="control-group">
-										  <label class="control-label" for="lastName">Last Name:</label>
-										  <div class="controls">
-										    <input id="lastName" name="lastName" class="input-xlarge" type="text" value="#fLastName#">			    
-										  </div>
-										</div>
+									  <label class="control-label" for="lastName">Last Name:</label>
+									  <div class="controls">
+									    <input id="lastName" name="lastName" class="input-xlarge" type="text" value="#fLastName#">			    
+									  </div>
+									</div>
 						            <!--- <label>Last Name</label>
 						            <input type="text" value="#fLastName#" class="input-xlarge"> --->
 
 						            <div class="control-group">
-										  <label class="control-label" for="email">Email:</label>
-										  <div class="controls">
-										    <input id="email" name="email" class="input-xlarge" type="text" value="#fEmail#">			    
-										  </div>
-										</div>
+									  <label class="control-label" for="email">Email:</label>
+									  <div class="controls">
+									    <input id="email" name="email" class="input-xlarge" type="text" value="#fEmail#">			    
+									  </div>
+									</div>
 						            <!--- <label>Email</label>
 						            <input type="text" value="#fEmail#" class="input-xlarge"> --->
 
 						            <div class="control-group">
-										  <label class="control-label" for="address">Address:</label>
-										  <div class="controls">
-										  	<textarea id="address" name="address" rows="3" class="input-xlarge">#fAddress#</textarea>
-										  </div>
-										</div>
+									  <label class="control-label" for="address">Address:</label>
+									  <div class="controls">
+									  	<textarea id="address" name="address" rows="3" class="input-xlarge">#fAddress#</textarea>
+									  </div>
+									</div>
 						            <!--- <label>Address</label>
 						            <textarea value="#fAddress#" rows="3" class="input-xlarge"></textarea> --->
+
+						            <div class="control-group">
+									  <label class="control-label" for="phone">Phone:</label>
+									  <div class="controls">
+									    <input id="phone" name="phone" class="input-xlarge" type="text" value="#fPhone#">			    
+									  </div>
+									</div>
 
 						            <div class="control-group">
 										  <label class="control-label" for="timezonee">Time Zone:</label>
