@@ -30,15 +30,17 @@
   <form class="form-horizontal" action="#buildUrl('products.manage')#" method="POST" id="manageProduct" name="manageProduct">
     <input type="hidden" id="fsw" name="fsw" value=""/>
     <input type="hidden" id="productUID" name="productUID" value="" />
-    
     <div class="well">
         <button class="btn" id="newProduct" type="button">Add Product</button>
-        <table class="table">
+
+        <table class="table margin-top-10">
           <thead>
             <tr>
               <th style="text-align:center;width:30px;">##</th>
-              <th style="text-align:center;width:300px;">Product Name</th>
-              <th style="text-align:center;width:470px;">Product Description</th>
+              <th style="text-align:center;width:150px;">Product Name</th>
+              <th style="text-align:center;width:200px;">Product Description</th>
+              <th style="text-align:center;width:150px;">Category</th>
+              <th style="text-align:center;width:200px;">Owner</th>
               <th style="text-align:center;width:170px;">Is Active?</th>
               <th style="width: 56px;"></th>
             </tr>
@@ -51,6 +53,8 @@
                   <a href="index.cfm?action=products.manage&uid=#ProductUID#">#ProductName#</a>
                 </td>
     	          <td style="text-align:center;">#ProductDescription#</td>
+                <td style="text-align:center;">#category#</td>
+                <td style="text-align:center;">#owner#</td>
     	          <td style="text-align:center;"><cfif active eq 1>Active<cfelse>Inactive</cfif></td>
     	          <td>
     	              <a href="index.cfm?action=products.manage&uid=#ProductUID#"><i class="icon-pencil"></i></a>
@@ -62,4 +66,5 @@
         </table>
     </div>
   </form>
+
 </cfoutput>

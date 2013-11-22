@@ -22,7 +22,7 @@
 		<cfargument name="rc" type="struct" required="true" />
 
 		<cfset var productService = getProductService() />
-		<cfset arguments.rc.qGrid = productService.handleGrid(url) />
+		<cfset arguments.rc.qGrid = productService.handleGrid(rc) />
 	</cffunction>
 
 	<cffunction name="manage" access="public" returntype="void">

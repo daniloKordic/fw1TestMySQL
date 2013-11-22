@@ -11,9 +11,8 @@
 	</cffunction>
 
 	<cffunction name="handleGrid" access="public" output="false" returntype="any">
-		<cfargument name="url" type="any" required="true" />
+		<cfargument name="rc" type="any" required="true" />
 
-		<cfset fUserUID = ""/>
 
 		<cfscript>
 			var grid = {
@@ -25,14 +24,13 @@
 			};
 		</cfscript>
 
-		<cfif structKeyExists(arguments.url, "pageNumber")><cfset grid.pageNumber = arguments.url.pageNumber /></cfif>
-		<cfif structKeyExists(arguments.url, "rowsPerPage")><cfset grid.rowsPerPage = arguments.url.rowsPerPage /></cfif>
-		<cfif structKeyExists(arguments.url, "orderBy")><cfset grid.orderBy = arguments.url.orderBy /></cfif>
-		<cfif structKeyExists(arguments.url, "orderDirection")><cfset grid.orderDirection = arguments.url.orderDirection /></cfif>
-		<cfif structKeyExists(arguments.url, "start")><cfset grid.start = arguments.url.start /></cfif>
-		<cfif structKeyExists(arguments.url, "uuid")><cfset fUserUID = arguments.url.uuid /></cfif>
+		<cfif structKeyExists(arguments.rc, "pageNumber")><cfset grid.pageNumber = arguments.rc.pageNumber /></cfif>
+		<cfif structKeyExists(arguments.rc, "rowsPerPage")><cfset grid.rowsPerPage = arguments.rc.rowsPerPage /></cfif>
+		<cfif structKeyExists(arguments.rc, "orderBy")><cfset grid.orderBy = arguments.rc.orderBy /></cfif>
+		<cfif structKeyExists(arguments.rc, "orderDirection")><cfset grid.orderDirection = arguments.rc.orderDirection /></cfif>
+		<cfif structKeyExists(arguments.rc, "start")><cfset grid.start = arguments.rc.start /></cfif>
 
-		<cfreturn getProductGateway().getGrid(grid=grid, uid=fUserUID) />
+		<cfreturn getProductGateway().getGrid(grid=grid) />
 	</cffunction>
 
 	<cffunction name="HandleRequest" access="public" output="false" returntype="any">

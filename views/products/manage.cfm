@@ -1,126 +1,130 @@
 <cfoutput>
 
-        <cfset fProductUID=""/>
-        <cfset fProductName=""/>
-        <cfset fProductDescription=""/>
-        <cfset fIsActive=""/>
-        <cfset fCategoryUID=""/>
-        <cfset fNumProductPhotos="0"/>
-        <cfset fProductImages=""/>
-        <cfset fCreatedBy="#session.auth.user.getUID()#"/>
-        <cfset qCategory = "" />
+   <cfset fProductUID=""/>
+   <cfset fProductName=""/>
+   <cfset fProductDescription=""/>
+   <cfset fIsActive=""/>
+   <cfset fCategoryUID=""/>
+   <cfset fNumProductPhotos="0"/>
+   <cfset fProductImages=""/>
+   <cfset fCreatedBy="#session.auth.user.getUID()#"/>
+   <cfset qCategory = "#rc.event.Categories#" />
 
-        
-        <cfset fProductUID="#rc.event.product.getProductUID()#"/>
-        <cfset fProductName="#rc.event.product.getProductName()#"/>
-        <cfset fProductDescription="#rc.event.product.getProductDescription()#"/>
-        <cfset fIsActive="#rc.event.product.getActive()#"/>
-        <cfset fCategoryUID="#rc.event.product.getCategoryUID()#"/>
-        <cfset fNumProductPhotos="#rc.event.product.getNumProductPhotos()#"/>
-        <cfset fProductImages="#rc.event.product.getProductPhotos()#"/>
-        <cfset fCreatedBy="#rc.event.product.getCreatedBy()#"/>
-        <cfset qCategory = "#rc.event.Categories#" />
 
-<script type="text/javascript">
+   <cfif rc.event.product.getProductUID() neq "">
+      <cfset fProductUID="#rc.event.product.getProductUID()#"/>
+      <cfset fProductName="#rc.event.product.getProductName()#"/>
+      <cfset fProductDescription="#rc.event.product.getProductDescription()#"/>
+      <cfset fIsActive="#rc.event.product.getActive()#"/>
+      <cfset fCategoryUID="#rc.event.product.getCategoryUID()#"/>
+      <cfset fNumProductPhotos="#rc.event.product.getNumProductPhotos()#"/>
+      <cfset fProductImages="#rc.event.product.getProductPhotos()#"/>
+      <cfset fCreatedBy="#rc.event.product.getCreatedBy()#"/>
+      <cfset qCategory = "#rc.event.Categories#" />   
+   </cfif>
+   
 
-                $(document).ready(function() {                        
-                        path = '#application.ImagesDirRel#';
+   <script type="text/javascript">
 
-                        $('##thumbnails a').lightBox();
+          $(document).ready(function() {                        
+                  path = '#application.ImagesDirRel#';
 
-                        $("a[rel^='lightbox']").slimbox({
-                                overlayOpacity: 0.6,
-                                counterText: "Image {x} of {y}",
-                                closeKeys: [27, 70],
-                                nextKeys: [39, 83]
-                        }, null, function(el) {
-                                        return (this == el) || ((this.rel.length > 8) && (this.rel == el.rel));
-                                });
+                  $('##thumbnails a').lightBox();
 
-                        $('##manageProduct').validate(
-                        {
-                                rules: {
-                                        productName: {
-                                                required: true,
-                                                minlength: 6
-                                        },
-                                        productDescription: {
-                                                minlength: 6,
-                                                required: true
-                                        },
-                                        category: {
-                                                required: true
-                                        }
-                                },
-                                highlight: function(element) {
-                                        $(element).closest('.control-group').removeClass('success').addClass('error');
-                                },
-                                success: function(element) {
-                                        element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
-                                }
-                        });
+                  $("a[rel^='lightbox']").slimbox({
+                          overlayOpacity: 0.6,
+                          counterText: "Image {x} of {y}",
+                          closeKeys: [27, 70],
+                          nextKeys: [39, 83]
+                  }, null, function(el) {
+                                  return (this == el) || ((this.rel.length > 8) && (this.rel == el.rel));
+                          });
 
-                        $("##updateProduct").click(function() {
-                                if (validateForm()) {
-                                        if ($("##productUID").val() == "") {
-                                                $("##fsw").val("save");
-                                        } else {
-                                                $("##fsw").val("update");
-                                        }
-                                        //submitForm();
-                                        $("##manageProduct").submit();
-                                }
-                        });
+                  $('##manageProduct').validate(
+                  {
+                          rules: {
+                                  productName: {
+                                          required: true,
+                                          minlength: 6
+                                  },
+                                  productDescription: {
+                                          minlength: 6,
+                                          required: true
+                                  },
+                                  category: {
+                                          required: true
+                                  }
+                          },
+                          highlight: function(element) {
+                                  $(element).closest('.control-group').removeClass('success').addClass('error');
+                          },
+                          success: function(element) {
+                                  element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+                          }
+                  });
 
-                        $("##deleteProduct").click(function() {
-                                if (validateForm()) {
-                                        $("##fsw").val("delete");
-                                        //submitForm();
-                                        $("##manageProduct").submit();
-                                }
-                        });
+                  $("##updateProduct").click(function() {
+                          if (validateForm()) {
+                                  if ($("##productUID").val() == "") {
+                                          $("##fsw").val("save");
+                                  } else {
+                                          $("##fsw").val("update");
+                                  }
+                                  //submitForm();
+                                  $("##manageProduct").submit();
+                          }
+                  });
 
-                        $("##backBtn").click(function() {
-                                document.location = "index.cfm?action=products";
-                        });
-                });
+                  $("##deleteProduct").click(function() {
+                          if (validateForm()) {
+                                  $("##fsw").val("delete");
+                                  //submitForm();
+                                  $("##manageProduct").submit();
+                          }
+                  });
 
-                function validateForm() {
-                        var error = true;
+                  $("##backBtn").click(function() {
+                     var userUID=$("##createdBy").val();
+                     document.location = "index.cfm?action=products&uuid="+userUID;
+                  });
+          });
 
-                        if ($("##productName").val() == "") { error = false; $("##productName").closest('.control-group').addClass("error"); }
+          function validateForm() {
+                  var error = true;
 
-                        return error;
-                }
+                  if ($("##productName").val() == "") { error = false; $("##productName").closest('.control-group').addClass("error"); }
 
-                function submitForm() {
-                        $("##manageProduct").submit();
-                }
+                  return error;
+          }
 
-                function modalWin(uid) {
-                
-                        var result=window.showModalDialog("index.cfm?action=products.image&uid="+uid+"&modal=1","Upload",
-                                "dialogWidth:860px;dialogHeight:650px");
-                                console.log(result);
-                }
-                function resultFromPopup(message){
-                    var numImages = $("##numProductPhotos").val();
-                    if (message) {
-                        var imagesArr = message.split(',');
-                        var numPhotos = $("##numProductPhotos").val();                                
-                        $("##numProductPhotos").val(parseInt(numPhotos)+parseInt(imagesArr.length));
-                        for (var i=0; i<imagesArr.length; i++) {                                        
-                                $(".ProductImagess").append("<li><div class='imageHolder'><a href='#application.ImagesDirRel#original/"+imagesArr[i]+"' title='Turntable by Jens Kappelmann'><img src='#application.ImagesDirRel#"+imagesArr[i]+"' alt='turntable'></a><input type='hidden' id='productImage_"+(parseInt(numPhotos)+i+1)+"' name='productImage' value='"+imagesArr[i]+"' /></div></li>");
-                                    
-                        }
+          function submitForm() {
+                  $("##manageProduct").submit();
+          }
 
-                        $('##thumbnails a').lightBox();
-                    }          
-                                
-                }
-                        
-            
-        </script>
+          function modalWin(uid) {
+          
+                  var result=window.showModalDialog("index.cfm?action=products.image&uid="+uid+"&modal=1","Upload",
+                          "dialogWidth:860px;dialogHeight:650px");
+                          console.log(result);
+          }
+          function resultFromPopup(message){
+              var numImages = $("##numProductPhotos").val();
+              if (message) {
+                  var imagesArr = message.split(',');
+                  var numPhotos = $("##numProductPhotos").val();                                
+                  $("##numProductPhotos").val(parseInt(numPhotos)+parseInt(imagesArr.length));
+                  for (var i=0; i<imagesArr.length; i++) {                                        
+                          $(".ProductImagess").append("<li><div class='imageHolder'><a href='#application.ImagesDirRel#original/"+imagesArr[i]+"' title='Turntable by Jens Kappelmann'><img src='#application.ImagesDirRel#"+imagesArr[i]+"' alt='turntable'></a><input type='hidden' id='productImage_"+(parseInt(numPhotos)+i+1)+"' name='productImage' value='"+imagesArr[i]+"' /></div></li>");
+                              
+                  }
+
+                  $('##thumbnails a').lightBox();
+              }          
+                          
+          }
+                  
+      
+  </script>
 
         <style type="text/css">
                 label.valid {

@@ -125,15 +125,27 @@
 	<!--- READ --->
 	<cffunction name="getGrid" access="public" output="false" returntype="Query">
 		<cfargument name="grid" type="any" required="true" />
-		<cfargument name="uid" type="String" required="false" default="" />
 
 		<cfset var qry = "" />
 
 		<cfquery name="qry" datasource="#getDSN()#">
 			select
-				p.*
+				p.*				
+				,(select concat_ws(' ',FirstName,LastName) from Users where userUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="##session.auth.user.getUID()##" />) as owner
+				,(select 
+						c.CategoryName
+					from 
+						Products2CategoriesLookup p2c
+						join Categories c on p2c.CategoryUID=c.CategoryUID
+					where
+						p2c.ProductUID=p.ProductUID) as category
 			from
-				Products p  
+				Products p 
+			where
+				1=1
+				<cfif session.auth.user.getUID() neq "">
+					and createdBy=<cfqueryparam cfsqltype="cf_sql_varchar" value="#session.auth.user.getUID()#" />
+				</cfif>			 
 		</cfquery>
 
 		<cfreturn qry />
