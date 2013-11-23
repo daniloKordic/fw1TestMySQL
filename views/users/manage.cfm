@@ -240,7 +240,8 @@
 										  <label class="control-label" for="userType">User Type:</label>
 										  <div class="controls">
 										    <select name="typeID" id="typeID" class="input-xlarge">
-							              		<option value="">Please select...</option>		    
+							              		<option value="">Please select...</option>		 
+							              		<option value="1" <cfif fTypeID eq 1>selected</cfif>>Admin</option>   
 							              		<option value="2" <cfif fTypeID eq 2>selected</cfif>>Registered User</option>
 							              		<option value="4" <cfif fTypeID eq 4>selected</cfif>>Company</option>
 							              	</select>

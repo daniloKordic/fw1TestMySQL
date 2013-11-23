@@ -138,7 +138,7 @@ var uploader = new plupload.Uploader({
 	enctype:"multipart/form-data",
     max_file_size: '10485760mb',
     chunk_size: '15mb',
-    unique_names: false
+    unique_names: true
 
 });
 

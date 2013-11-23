@@ -40,6 +40,7 @@
 			<cfset arguments.rc.products = productService.getProducts(uid=rc.uid) />
 		<cfelseif structKeyExists(rc, "cuid")>
 			<cfset arguments.rc.products = productService.getProductsByCategory(cuid=rc.cuid) />	
+			<cfset arguments.rc.companies = productService.getCompaniesByCategory(cuid=rc.cuid) />
 		
 		<cfelse>
 			<cfset arguments.rc.products = productService.getProducts() />	

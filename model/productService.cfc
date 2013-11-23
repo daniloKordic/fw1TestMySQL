@@ -153,6 +153,18 @@
 		<cfreturn products />
 	</cffunction>
 
+	<cffunction name="getCompaniesByCategory" access="public" output="false" returntype="any">
+		<cfargument name="cuid" required="false" type="string" default="" />
+		<cfset var companies=""/>
+
+		<cfif arguments.cuid neq "">
+			<cfset companies = getProductGateway().getCompaniesByCategory(cuid=arguments.cuid) />
+		</cfif>
+
+		<cfreturn companies />
+
+	</cffunction>
+
 	<cffunction name="UploadFileCall" access="remote" output="false" returnformat="JSON">
 		<cfargument name="name" type="string">
 		<cfargument name="format" type="string" default="0">

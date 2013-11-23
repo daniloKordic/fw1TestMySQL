@@ -339,6 +339,43 @@
 		<cfreturn qry />
 	</cffunction>
 
+	<cffunction name="getCompaniesByCategory" access="public" output="false" returntype="query">
+		<cfargument name="cuid" required="false" type="string" default="" />
+		<cfset var qry=""/>
+
+		<cfquery name="qry" datasource="#getDSN()#">
+			select
+				 u.userUID
+				,u.FirstName
+				,u.LastName
+				,u.userImage
+				,(
+					select
+						count(p.ProductUID)
+					from
+						Products p
+						join Products2CategoriesLookup p2c on p.ProductUID=p2c.ProductUID
+					where
+						p2c.CategoryUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.cuid#" />
+						and p.createdBy=u.userUID
+				) as numProds
+			from
+				Users u
+			where
+				u.userUID in (
+					select
+						p.createdBy
+					from
+						Products p
+						join Products2CategoriesLookup p2c on p.ProductUID=p2c.ProductUID
+					where
+						p2c.CategoryUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.cuid#" />
+				)
+		</cfquery>
+
+		<cfreturn qry />
+	</cffunction>
+
 	<!--- DELETE --->
 	<cffunction name="delete" access="public" output="false" returntype="Numeric">
 		<cfargument name="product" required="true" type="any" />
