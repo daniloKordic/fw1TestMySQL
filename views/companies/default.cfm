@@ -1,0 +1,3 @@
+<cfoutput>
+	default.cfm
+</cfoutput>

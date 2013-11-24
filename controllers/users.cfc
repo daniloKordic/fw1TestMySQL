@@ -37,7 +37,7 @@
 		<cfelse>
 			<cfset arguments.rc.event = userService.handleRequest(url) />
 		</cfif>
-			<cfdump var="#arguments.rc.event.user.getUsername()#" output="C:\rtt.txt" />
+		
 		<cfif structKeyExists(arguments.rc, "fsw") and (arguments.rc.fsw eq "save" 	or arguments.rc.fsw eq "delete" or arguments.rc.fsw eq "update")>
 			<cfset variables.fw.redirect("users","event") />
 		</cfif>

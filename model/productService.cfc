@@ -144,10 +144,11 @@
 
 	<cffunction name="getProductsByCategory" access="public" output="false" returntype="any">
 		<cfargument name="cuid" required="false" type="string" default="" />
+		<cfargument name="uid" required="false" type="string" default="" />
 		<cfset var products=""/>
 
 		<cfif arguments.cuid neq "">
-			<cfset products = getProductGateway().getByCategory(cuid=arguments.cuid) />
+			<cfset products = getProductGateway().getByCategory(cuid=arguments.cuid, uid=arguments.uid) />
 		</cfif>
 
 		<cfreturn products />

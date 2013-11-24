@@ -144,6 +144,14 @@
 		<cfreturn event />
 	</cffunction>
 
+	<cffunction name="getByUID" access="public" output="false" returntype="any">
+		<cfargument name="uid" type="string" required="true" />
+
+		<cfset var user = getUserGateway().getByKey(uid=arguments.uid) />
+
+		<cfreturn user />
+	</cffunction>
+
 	<cffunction name="getByEmail" access="public" output="false" returntype="any">
 		<cfargument name="email" required="true" type="string" default="" />
 

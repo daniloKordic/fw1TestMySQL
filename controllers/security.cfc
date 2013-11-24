@@ -12,6 +12,7 @@
 				and	not listFindNoCase('register', variables.fw.getSection()) 
 				and	not listFindNoCase('login', variables.fw.getSection()) 
 				and	not listFindNoCase('products', variables.fw.getSection()) 
+				and	not listFindNoCase('companies', variables.fw.getSection())
 				and	not listFindNoCase('main.error', variables.fw.getFullyQualifiedAction() )>
 			<cfset variables.fw.redirect('main') />
 		</cfif>

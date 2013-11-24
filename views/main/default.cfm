@@ -82,82 +82,81 @@
 			</div>
 			<div class="span6New content" style="position:relative;">
 				<ul class="thumbnails span12" style="float:left;">
+
+					<!--- AKO NIJE IZABRANA KATEGORIJA--->
 					<cfif not structKeyExists(rc, "companies")>
+
+						<!--- AKO IMA PROIZVODA DA SE PRIKAZU --->
 						<cfif rc.products.recordCount neq 0>					
 							<cfloop query="#rc.products#">		
 								<cfset fRowid = #rc.products.currentRow# />								
 								<!--- CHECK IF ON THIS PAGE --->
-								<cfif fRowid lte (#fPage#*6) and fRowid gt ((#fPage#-1)*6)>												
-									<cfif CategoryUID eq fCategoryUID>
-											<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
-										   	<div class="thumbnail">
-										   		<cfif mainImage neq "">
-										   			<a href="index.cfm?action=products.view&uid=#ProductUID#">
-										   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
-										   			</a>
-										   		</cfif>							   	
-											   	<h4>
-											   		<a href="index.cfm?action=products.view&uid=#ProductUID#">
-											   			#ProductName#
-											   		</a>
-											   	</h4>
-											   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
-										   	</div>
-											</li>
-										<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
-									<cfelseif fCategoryUID eq "">
-										<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
-									   	<div class="thumbnail">
-									   		<cfif mainImage neq "">
-									   			<a href="index.cfm?action=products.view&uid=#ProductUID#">
-									   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
-									   			</a>
-									   		</cfif>							   	
-										   	<h4>
-										   		<a href="index.cfm?action=products.view&uid=#ProductUID#">
-										   			#ProductName#
-										   		</a>
-										   	</h4>
-										   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
-									   	</div>
-										</li>
-										<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
-									</cfif>
+								<cfif fRowid lte (#fPage#*6) and fRowid gt ((#fPage#-1)*6)>	
+									<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
+								   	<div class="thumbnail">
+								   		<cfif mainImage neq "">
+								   			<a href="index.cfm?action=companies.view&uid=#createdBy#&cuid=#CategoryUID#">
+								   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
+								   			</a>
+								   		</cfif>							   	
+									   	<h4>
+									   		<a href="index.cfm?action=companies.view&uid=#createdBy#&cuid=#CategoryUID#">
+									   			#ProductName#
+									   		</a>
+									   	</h4>
+									   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
+								   	</div>
+									</li>
+									<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
 								</cfif>
-							</cfloop>	
+							</cfloop>
+
+						<!--- AKO NEMA PROIZVODA DA SE PRIKAZU --->	
 						<cfelse>
 							<li class="span12" style="text-align:center;min-height:400px;vertical-align:middle;padding-top:100px;">
 								<h2>No products</h2>
 							</li>
 						</cfif>
+
+					<!--- AKO JE DEFINISANA KATEGORIJA --->
 					<cfelse>
-						<cfloop query="#rc.companies#">
-							<cfset fRowid = #rc.companies.currentRow# />								
-							<!--- CHECK IF ON THIS PAGE --->
-							<cfif fRowid lte (#fPage#*6) and fRowid gt ((#fPage#-1)*6)>												
-								<!--- <cfif CategoryUID eq fCategoryUID> --->
-										<li class="span4" <cfif rc.companies.currentRow mod 3 neq 0 and rc.companies.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
-									   	<div class="thumbnail">
-									   		<cfif userImage neq "">
-									   			<a href="index.cfm?action=companies.view&uid=#userUID#">
-									   				<img src="#application.ImagesDirRel##userImage#" style="width:100%;" alt="">	
-									   			</a>
-									   		</cfif>							   	
-										   	<h4>										   		
-										   		<a href="index.cfm?action=companies.view&uid=#userUID#">
-										   			#FirstName# #LastName#
-										   		</a>
-										   	</h4>
-										   	<p>
-										   		<h6>
-										   		Products in category: #numProds#
-										   		</h6>
-										   	</p>
-									   	</div>
-										</li>
+
+						<!--- AKO IMA KOMPANIJA KOJE IMAJU PROIZVODE U TOJ KATEGORIJI --->
+						<cfif rc.companies.recordCount neq 0>
+							<cfloop query="#rc.companies#">
+								<cfset fRowid = #rc.companies.currentRow# />								
+								<!--- CHECK IF ON THIS PAGE --->
+								<cfif fRowid lte (#fPage#*6) and fRowid gt ((#fPage#-1)*6)>												
+									<!--- <cfif CategoryUID eq fCategoryUID> --->
+									<li class="span4" <cfif rc.companies.currentRow mod 3 neq 0 and rc.companies.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
+								   	<div class="thumbnail">
+								   		<cfif userImage neq "">
+								   			<a href="index.cfm?action=companies.view&uid=#userUID#&cuid=#rc.cuid#">
+								   				<img src="#application.ImagesDirRel##userImage#" style="width:100%;" alt="">	
+								   			</a>
+								   		</cfif>							   	
+									   	<h4>										   		
+									   		<a href="index.cfm?action=companies.view&uid=#userUID#&cuid=#rc.cuid#">
+									   			#FirstName# #LastName#
+									   		</a>
+									   	</h4>
+									   	<p>
+									   		<h6>
+									   		Products in category: #numProds#
+									   		</h6>
+									   	</p>
+								   	</div>
+									</li>
 									<cfif rc.companies.currentRow mod 3 eq 0><div class="clear"></div></cfif>
-							</cfif>
-						</cfloop>
+								</cfif>
+							</cfloop>
+
+						<!--- AKO NEMA KOMPANIJA KOJE IMAJU PROIZVODE U TOJ KATEGORIJI --->	
+						<cfelse>							
+							<li class="span12" style="text-align:center;min-height:400px;vertical-align:middle;padding-top:100px;">
+								<h2>No products</h2>
+							</li>
+						</cfif>
 					</cfif>
 				</ul>
 
@@ -176,8 +175,13 @@
 
 
 							<!--- PAGES --->
-							<cfset fNumPages = rc.products.recordCount / 6 />							
-							<cfset fLastPage = round(fNumPages mod 6) + 1 />
+							<cfif rc.products.recordcount lte 6>
+								<cfset fNumPages = 1/>
+							<cfelse>
+								<cfset fNumPages = rc.products.recordCount / 6 />							
+							</cfif>							
+							<cfset fLastPage = round(fNumPages / 6) + 1 />
+							
 							<cfif round(fNumPages) neq 0>
 								<cfloop from="1" to="#fNumPages#" index="i">
 									<cfif fPage eq #i#>
@@ -282,7 +286,4 @@
 	}
 </script>
 
-<cfif structKeyExists(rc, "companies")>
-	<cfdump var="#rc.companies#"/>	
-</cfif>
 </cfoutput>

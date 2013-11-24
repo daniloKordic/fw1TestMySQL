@@ -10,7 +10,8 @@
 		<title>#rc.pageTitle#</title>
 
 		<!---<script type="text/javascript" src="assets/js/jquery-1.9.1.js"></script>--->
-		<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>		
+		<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDe6OAz-ivw1bg4PoTKVyQ6M0SqndG8LMc&sensor=false"></script>		
 		
 		<link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 		<link href="assets/bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">

@@ -237,6 +237,7 @@
 					WHERE ProductUID = p.ProductUID
 					LIMIT 1
 				) AS mainImage
+				,p.createdBy
 			FROM 
 				Products p
 			WHERE 
@@ -261,7 +262,7 @@
 			from
 				ProductImages
 			where
-				ProductUID='#arguments.uid#'
+				ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#"/>
 		</cfquery>
 
 		<cfset imagesList = valueList(qImages.ImageFile) />
@@ -284,7 +285,7 @@
 			where
 				1=1
 				<cfif arguments.uid neq "">
-					and tbl.ProductUID = '#arguments.uid#'
+					and tbl.ProductUID = <cfqueryparam value="#arguments.uid#" cfsqltype="cf_sql_varchar" />
 				</cfif>
 		</cfquery>
 		<cfreturn qry />
@@ -311,6 +312,7 @@
 
 	<cffunction name="getByCategory" output="false" access="public" returntype="query">
 		<cfargument name="cuid" type="String" required="false" default="" />		
+		<cfargument name="uid" type="String" required="false" default="" />
 		<cfset var qry=""/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
@@ -325,6 +327,7 @@
 				,p.ProductDescription
 				,p.active
 				,p.datecreated
+				,p.createdBy
 				,(select CategoryUID from Products2CategoriesLookup where ProductUID=p.ProductUID) as CategoryUID
 				,(select ImageFile from ProductImages where ProductUID = p.ProductUID limit 1) as mainImage
 			from
@@ -333,7 +336,10 @@
 			where
 				1=1
 				<cfif arguments.cuid neq "">
-					and tbl.CategoryUID = '#arguments.cuid#'
+					and tbl.CategoryUID = <cfqueryparam value="#arguments.cuid#" cfsqltype="cf_sql_varchar" />
+				</cfif>
+				<cfif arguments.uid neq "">
+					and tbl.createdBy=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
 				</cfif>
 		</cfquery>
 		<cfreturn qry />
