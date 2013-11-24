@@ -320,6 +320,7 @@
 			SELECT 
 				tbl.*
 				,'' as images
+				,(select c.CategoryName from Categories c where c.CategoryUID=tbl.CategoryUID) as categoryName
 			from (			
 			select
 				p.ProductUID
