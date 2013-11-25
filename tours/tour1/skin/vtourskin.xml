@@ -73,9 +73,9 @@
 
 	<layer name="skin_control_bar" keep="true" type="container" bgcolor="0x000000" bgalpha="0.5" align="leftbottom" width="100%" height="40" x="0" y="20" y_opened="20" y_closed="-42" zorder="3">
 		<layer name="skin_btmborder"  style="skin_base"           crop="2|52|60|12"   align="bottomleft" edge="topleft" width="100%" height="12" x="0" y="0" enabled="false" />
-		<layer name="skin_btn_prev"   style="skin_base|skin_glow" crop="0|64|64|64"   align="left"        x="5"    y="0"   scale="0.5" alpha="0.5"  onclick="skin_nextscene(-1);" />
-		<layer name="skin_btn_next"   style="skin_base|skin_glow" crop="64|64|64|64"  align="right"       x="5"    y="0"   scale="0.5" alpha="0.5"  onclick="skin_nextscene(+1);" />
-		<layer name="skin_btn_thumbs" style="skin_base|skin_glow" crop="0|128|64|64"  align="leftbottom"  x="50"   y="4"   scale="0.5" ondown2="skin_showmap(false); skin_showthumbs();" />
+		<!--<layer name="skin_btn_prev"   style="skin_base|skin_glow" crop="0|64|64|64"   align="left"        x="5"    y="0"   scale="0.5" alpha="0.5"  onclick="skin_nextscene(-1);" />
+		<layer name="skin_btn_next"   style="skin_base|skin_glow" crop="64|64|64|64"  align="right"       x="5"    y="0"   scale="0.5" alpha="0.5"  onclick="skin_nextscene(+1);" />-->
+		<!-- <layer name="skin_btn_thumbs" style="skin_base|skin_glow" crop="0|128|64|64"  align="leftbottom"  x="50"   y="4"   scale="0.5" ondown2="skin_showmap(false); skin_showthumbs();" /> -->
 		<layer name="skin_btn_map"    style="skin_base|skin_glow" crop="64|128|64|64" align="leftbottom"  x="90"   y="4"   scale="0.5" ondown2="skin_showthumbs(false); skin_showmap();" visible="false" />
 		<layer name="skin_btn_lt"     style="skin_base|skin_glow" crop="0|192|64|64"  align="bottom"      x="-100" y="4"   scale="0.5" ondown2="set(hlookat_moveforce,-1);" onup2="set(hlookat_moveforce,0);" />
 		<layer name="skin_btn_rt"     style="skin_base|skin_glow" crop="64|192|64|64" align="bottom"      x="-60"  y="4"   scale="0.5" ondown2="set(hlookat_moveforce,+1);" onup2="set(hlookat_moveforce,0);" />
@@ -84,9 +84,9 @@
 		<layer name="skin_btn_in"     style="skin_base|skin_glow" crop="0|320|64|64"  align="bottom"      x="+60"  y="4"   scale="0.5" ondown2="set(fov_moveforce,-1);"     onup2="set(fov_moveforce,0);" />
 		<layer name="skin_btn_ou"     style="skin_base|skin_glow" crop="64|320|64|64" align="bottom"      x="+100" y="4"   scale="0.5" ondown2="set(fov_moveforce,+1);"     onup2="set(fov_moveforce,0);" />
 		<layer name="skin_btn_gyro"   style="skin_base|skin_glow" crop="0|384|64|64"  align="bottom"      x="140"  y="4"   scale="0.5" ondown2="skin_showmap(false);" onclick="switch(plugin[skin_gyro].enabled);" visible="false" devices="html5" />
-		<layer name="skin_btn_fs"     style="skin_base|skin_glow" crop="0|576|64|64"  align="bottom"      x="140"  y="4"   scale="0.5" onclick="switch(fullscreen);" devices="fullscreensupport" />
-		<layer name="skin_btn_hide"   style="skin_base|skin_glow" crop="0|448|64|64"  align="right"       x="50"   y="0"   scale="0.5" onclick="skin_hideskin()" />
-		<layer name="skin_btn_show"   style="skin_base|skin_glow" crop="64|448|64|64" align="right"       x="5"    y="-36" scale="0.5" alpha="0" visible="false" onclick="skin_showskin()" />
+		<!--<layer name="skin_btn_fs"     style="skin_base|skin_glow" crop="0|576|64|64"  align="bottom"      x="140"  y="4"   scale="0.5" onclick="switch(fullscreen);" devices="fullscreensupport" />-->
+		<!-- <layer name="skin_btn_hide"   style="skin_base|skin_glow" crop="0|448|64|64"  align="right"       x="50"   y="0"   scale="0.5" onclick="skin_hideskin()" />
+		<layer name="skin_btn_show"   style="skin_base|skin_glow" crop="64|448|64|64" align="right"       x="5"    y="-36" scale="0.5" alpha="0" visible="false" onclick="skin_showskin()" /> -->
 	</layer>
 
 	<layer name="skin_loadingtext"  keep="true" url="%SWFPATH%/plugins/textfield.swf" align="center" x="5" y="-5" html="loading..." visible="false" autoheight="true" background="false" border="false" enabled="false" css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:22px; font-style:italic;" textshadow="2" />
