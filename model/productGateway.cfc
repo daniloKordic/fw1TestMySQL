@@ -320,7 +320,6 @@
 			SELECT 
 				tbl.*
 				,'' as images
-				,(select c.CategoryName from Categories c where c.CategoryUID=tbl.CategoryUID) as categoryName
 			from (			
 			select
 				p.ProductUID
@@ -330,6 +329,7 @@
 				,p.datecreated
 				,p.createdBy
 				,(select CategoryUID from Products2CategoriesLookup where ProductUID=p.ProductUID) as CategoryUID
+				,(select CategoryName from Categories where CategoryUID='#arguments.cuid#') as CategoryName
 				,(select ImageFile from ProductImages where ProductUID = p.ProductUID limit 1) as mainImage
 			from
 				Products p
@@ -342,7 +342,8 @@
 				<cfif arguments.uid neq "">
 					and tbl.createdBy=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
 				</cfif>
-		</cfquery>
+		</cfquery>		
+			
 		<cfreturn qry />
 	</cffunction>
 

@@ -131,12 +131,12 @@
 									<li class="span4" <cfif rc.companies.currentRow mod 3 neq 0 and rc.companies.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
 								   	<div class="thumbnail">
 								   		<cfif userImage neq "">
-								   			<a href="index.cfm?action=companies.view&uid=#userUID#&cuid=#rc.cuid#">
+								   			<a href="index.cfm?action=companies.view&uid=#userUID#">
 								   				<img src="#application.ImagesDirRel##userImage#" style="width:100%;" alt="">	
 								   			</a>
 								   		</cfif>							   	
 									   	<h4>										   		
-									   		<a href="index.cfm?action=companies.view&uid=#userUID#&cuid=#rc.cuid#">
+									   		<a href="index.cfm?action=companies.view&uid=#userUID#">
 									   			#FirstName# #LastName#
 									   		</a>
 									   	</h4>
