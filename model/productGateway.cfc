@@ -245,6 +245,8 @@
 				<cfif arguments.uid neq "">
 					and p.ProductUID in (select ProductUID from Products2CategoriesLookup where CategoryUID='#arguments.uid#')
 				</cfif>
+			ORDER BY
+				p.dateCreated desc
 			<cfif arguments.count neq 0>
 				limit #arguments.count#
 			</cfif>
@@ -271,6 +273,7 @@
 			select 
 				tbl.*
 				,'#imagesList#' as images
+				,(select CategoryName from Categories where CategoryUID=tbl.CategoryUID) as CategoryName
 			from (			
 			select
 				p.ProductUID

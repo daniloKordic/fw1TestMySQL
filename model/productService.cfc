@@ -142,6 +142,17 @@
 		<cfreturn products />
 	</cffunction>
 
+	<cffunction name="getByUID" access="public" output="false" returntype="any">
+		<cfargument name="uid" default="" type="string" required="false" />
+		<cfset var products = ""/>
+
+		<cfif arguments.uid neq "">
+			<cfset products = getProductGateway().getByUID(uid=arguments.uid) />
+		</cfif>
+
+		<cfreturn products />
+	</cffunction>
+
 	<cffunction name="getProductsByCategory" access="public" output="false" returntype="any">
 		<cfargument name="cuid" required="false" type="string" default="" />
 		<cfargument name="uid" required="false" type="string" default="" />

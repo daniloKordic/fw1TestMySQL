@@ -7,6 +7,7 @@
 	<cfset fStoreEmail=""/>
 	<cfset fStoreLogo=""/>	
 	<cfset fCategoryUID=""/>
+	<cfset fProductUID=""/>
 	<cfset fHotspot=""/>
 
 	<cfif structKeyExists(rc, "company")>
@@ -21,6 +22,9 @@
 			<cfset fHotspot="#rc.products.CategoryName#"/>
 		</cfif>				
 	</cfif>
+	<cfif structKeyExists(rc, "puid")>
+		<cfset fProductUID="#rc.puid#"/>
+	</cfif>
 
 	
 	<script src="tours/tour1/tour.js"></script>
@@ -29,36 +33,10 @@
 		$(document).ready(function() {
 			$('##thumbnails a').lightBox();	
 
-			$("##myDialog").dialog({
-				width: 1000,
-				height: 600,
-				modal: true,
-				autoOpen: false,
-				resizable: true,
-				open: function(event,ui){
-					var categoryUID=$("##categoryUID").val();
-					
-					if (categoryUID != "") {
-						$.getJSON("index.cfm?action=companies.category&cuid="+categoryUID, function(res, code) {
-
-						});
-					}
-					console.log(categoryUID);
-				},
-				show: {
-					effect: "explode",
-					duration: 200
-				},
-				hide: {
-					effect: "explode",
-					duration: 300
-				},
-				buttons: {
-					"OK": function() {
-						$(this).dialog("close");
-					}
-				}
-			}).dialog("widget").find(".ui-dialog-titlebar").hide();
+			if ($("##productUID").val() != "") {
+				var productUID=$("##productUID").val();
+				window.open("index.cfm?action=products.product&puid="+productUID,"Product Info","width=1000,height=600");
+			}
 		});
 
 		function test(ime) {
@@ -116,6 +94,7 @@
 	</div>
 	<input type="hidden" id="companyUID" name="companyUID" value="#fStoreUID#" /> 
 	<input type="hidden" id="categoryUID" name="categoryUID" value="#fCategoryUID#">
+	<input type="hidden" id="productUID" name="productUID" value="#fProductUID#">
 	<div class="clear"></div>	
 	<div id="companyInfo" class="row">
 		<div class="span6perc">
