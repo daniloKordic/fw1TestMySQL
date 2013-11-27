@@ -320,6 +320,7 @@ a:focus {
 
 .span6perc {
   width: 48%;
+  margin-left: 10px;
 }
 .span6 {
   width: 460px;

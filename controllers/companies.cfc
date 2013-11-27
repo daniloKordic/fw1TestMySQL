@@ -49,15 +49,5 @@
 		
 	</cffunction>
 
-	<cffunction name="category" access="public" returntype="any">
-		<cfargument name="rc" type="struct" required="false" />
-		<cfargument name="cuid" type="string" required="false" />
-
-		<cfset var productService = getProductService() />
-
-		<cfif structKeyExists(arguments, "cuid")>
-			<cfset var products = productService.getProductsByCategory(cuid=arguments.cuid,uid=arguments.rc.uid) />
-		</cfif>
-	</cffunction>
 
 </cfcomponent>

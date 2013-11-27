@@ -27,6 +27,7 @@
 	</cfif>
 
 	
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDe6OAz-ivw1bg4PoTKVyQ6M0SqndG8LMc&sensor=false"></script>
 	<script src="tours/tour1/tour.js"></script>
 	<script type="text/javascript">
 
@@ -35,17 +36,28 @@
 
 			if ($("##productUID").val() != "") {
 				var productUID=$("##productUID").val();
-				window.open("index.cfm?action=products.product&puid="+productUID,"Product Info","width=1000,height=600");
+				var w=1200;
+				var h=600;
+				var LeftPosition = (screen.width) ? (screen.width-w)/2 : 0; 
+				var TopPosition = (screen.height) ? (screen.height-h)/2-35 : 0;
+				var url="index.cfm?action=products.product&puid="+productUID+"&modal=1";
+				var winName="ProductDetails";
+				var settings = 'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars=1';
+				var popupWindow = window.open(url,winName,settings);
 			}
 		});
 
-		function test(ime) {
-			console.log(ime);
-			window.open("http://www.google.com","test","width=1000,height=650");
-			/*if (!$("##myDialog").dialog("isOpen")) {
-				$("##myDialog").dialog("open");
-				return;
-			}*/
+		function openCategory(cuid) {			
+			if (cuid != "") {
+				var w=1200;
+				var h=600;
+				var LeftPosition = (screen.width) ? (screen.width-w)/2 : 0; 
+				var TopPosition = (screen.height) ? (screen.height-h)/2-35 : 0;
+				var url="index.cfm?action=products.category&cuid="+cuid+"&modal=1";
+				var winName="Category Products";
+				var settings = 'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition;
+				var popupWindow = window.open(url,winName,settings);
+			}
 		}
 		function initialize() {
 			var myLatlng = new google.maps.LatLng(44.850104,20.386502);

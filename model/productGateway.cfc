@@ -282,8 +282,14 @@
 				,p.active
 				,(select CategoryUID from Products2CategoriesLookup where ProductUID=p.ProductUID) as CategoryUID
 				,(select ImageFile from ProductImages where ProductUID = p.ProductUID limit 1) as mainImage
+				,u.FirstName
+				,u.LastName
+				,u.Address
+				,u.email
+				,u.phone
 			from
 				Products p			
+				join Users u on p.createdBy=u.UserUID
 			) tbl
 			where
 				1=1
