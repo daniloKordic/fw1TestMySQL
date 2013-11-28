@@ -81,4 +81,10 @@
 			<cfset var products = productService.getProductsByCategory(cuid=arguments.cuid,uid=arguments.rc.uid) />
 		</cfif>
 	</cffunction>
+
+	<cffunction name="saveRating" access="public" returntype="any">
+		<cfargument name="rc" type="struct" required="false" />
+		
+		<cfset var productService = getProductService() />
+	</cffunction>
 </cfcomponent>

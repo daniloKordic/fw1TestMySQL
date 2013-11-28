@@ -10,6 +10,8 @@
 	<cfset fStoreAddress=""/>
 	<cfset fStorePhone=""/>
 	<cfset fStoreEmail=""/>
+	<cfset fUserUID=""/>
+	<cfset fRating="-1" />
 
 	<cfif structKeyExists(rc, "product")>
 		<cfset fProductUID="#rc.product.ProductUID#" />
@@ -24,20 +26,16 @@
 		<cfset fStoreEmail="#rc.product.email#"/>
 	</cfif>
 
-	<!--- fProductUID: #fProductUID#<br/>
-	fProductName: #fProductName#<br/>
-	fProductDescription: #fProductDescription#<br/>
-	fCategoryName: #fCategoryName#<br/>
-	fMainImage: #fMainImage#<br/>
-	fImagesList: #fImagesList#<br/>
-	fStoreName: #fStoreName#<br/>
-	fStoreEmail: #fStoreEmail#<br/>
-	fStorePhone: #fStorePhone#<br/>
-	fStoreAddress: #fStoreAddress#<br/> --->
+	<cfif structKeyExists(session.auth, "user")>
+		<cfset fUserUID="#session.auth.user.getUID()#"/>
+	</cfif>	
+
+	<link rel="stylesheet" type="text/css" href="assets/css/rating.css">
 
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDe6OAz-ivw1bg4PoTKVyQ6M0SqndG8LMc&sensor=false"></script>
 	<script type="text/javascript" src="assets/js/galleria-1.3.3.js"></script>
 	<script type="text/javascript" src="assets/js/bootstrap-rating-input.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery.rating.js"></script>
 	<script type="text/javascript">
 		Galleria.configure({
 			lightbox: true
@@ -84,7 +82,9 @@
 		});
 
 		$(document).ready(function() {
-			
+			var userUID=$("##userUID").val();
+			var productUID=$("##productUID").val();
+			$('##rate1').rating("index.cfm?action=products.saveRating&uuid="+userUID+"&puid="+productUID, {maxvalue:5,increment:.5});
 		});
 
 		function initialize() {
@@ -106,7 +106,9 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 
 		function saveReview() {
-			console.log("saving review");
+			var txt = $("##new-review").val();
+			console.log("ajax call and save: "+txt);
+			
 		}
 	</script>
 
@@ -139,16 +141,18 @@
 		    -moz-transition: height 0.2s;
 		    transition: height 0.2s;
 		}
-		.stars
+		/*.stars
 		{
 		    margin: 20px 0;
 		    font-size: 24px;
 		    color: ##d17581;
-		}
+		}*/
 		##new-review{
 			width: 375px;
 		}
 	</style>
+	<input type="hidden" name="userUID" id="userUID" value="#fUserUID#" /> 
+	<input type="hidden" name="productUID" id="productUID" value="#fProductUID#" /> 
 
 	<div class="span6perc" style="margin:0 !important;">
 		<div id="demo">
@@ -165,7 +169,47 @@
 		<div id="demo">
 			<div class="span6perc">
 				<h4>#fProductName#</h4>
-				<input name="rating" id="rating" class="rating" type="number" data-max="4" data-min="0" <!--- data-clearable="remove" ---> />
+				<!--- <input name="rating" id="rating" class="rating" type="number" data-max="4" data-min="0" !--- data-clearable="remove" --- value="#fRating#" /> --->
+				<cfif fUserUID neq "">
+					
+				
+					<div class="rating" id="rate1">
+						<div class="cancel">
+							<a title="Cancel Rating" href="##0">Cancel Rating</a>
+						</div>
+						<div class="star star-left">
+							<a title="Give it 0.5/5" href="##0.5" style="width: 100%;">0.5</a>
+						</div>
+						<div class="star star-right">
+							<a title="Give it 1/5" href="##1" style="width: 100%;">1</a>
+						</div>
+						<div class="star star-left">
+							<a title="Give it 1.5/5" href="##1.5" style="width: 100%;">1.5</a>
+						</div>
+						<div class="star star-right">
+							<a title="Give it 2/5" href="##2" style="width: 100%;">2</a>
+						</div>
+						<div class="star star-left">
+							<a title="Give it 2.5/5" href="##2.5" style="width: 100%;">2.5</a>
+						</div>
+						<div class="star star-right">
+							<a title="Give it 3/5" href="##3" style="width: 100%;">3</a>
+						</div>
+						<div class="star star-left">
+							<a title="Give it 3.5/5" href="##3.5" style="width: 100%;">3.5</a>
+						</div>
+						<div class="star star-right">
+							<a title="Give it 4/5" href="##4" style="width: 100%;">4</a>
+						</div>
+						<div class="star star-left">
+							<a title="Give it 4.5/5" href="##4.5" style="width: 100%;">4.5</a>
+						</div>
+						<div class="star star-right">
+							<a title="Give it 5/5" href="##5" style="width: 100%;">5</a>
+						</div>
+					</div>
+				</cfif>
+
 				<div class="clear"></div>
 				<h5>$ 12.11</h5>
 				<div class="clear"></div>
@@ -184,33 +228,37 @@
 				<div class="clear"></div>
 				<div id="map-canvas" style="height:280px;"></div>
 			</div>
-			<div class="clear"></div>			
-			<div class="row" style="margin-top:40px;">
-				<div class="col-md-6">
-		    	<div class="well well-sm" style="padding:5px;margin-bottom:0;">
-		            <div class="text-right">
-		                <a class="btn btn-success btn-green" href="##reviews-anchor" id="open-review-box">Leave a Review</a>
-		            </div>
-		        
-		            <div class="row" id="post-review-box" style="display:none;margin-bottom:0;">
-		                <div class="col-md-6">
-		                    <form accept-charset="UTF-8" action="" method="post" id="reviewFrm" name="reviewFrm">
-		                        <input id="ratings-hidden" name="rating" type="hidden"> 
-		                        <textarea class="form-control animated" cols="80" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
-		        
-		                        <div class="text-right">
-		                            <!--- <div class="stars starrr" data-rating="0"></div> --->
-		                            <a class="btn btn-danger btn-sm" href="##" id="close-review-box" style="display:none; margin-right: 10px;">
-		                            <span class="glyphicon glyphicon-remove"></span>Cancel</a>
-		                            <button class="btn btn-success btn-lg" type="button" onclick="saveReview()">Save</button>
-		                        </div>
-		                    </form>
-		                </div>
-		            </div>
-		        </div> 
-		         
+			<div class="clear"></div>	
+			<cfif fUserUID neq "">				
+			
+				<div class="row" style="margin-top:40px;">
+					<div class="col-md-6">
+			    	<div class="well well-sm" style="padding:5px;margin-bottom:0;">
+			            <div class="text-right">
+			                <a class="btn btn-success btn-green" href="##reviews-anchor" id="open-review-box">Leave a Review</a>
+			            </div>
+			        
+			            <div class="row" id="post-review-box" style="display:none;margin-bottom:0;">
+			                <div class="col-md-6">
+			                    <form accept-charset="UTF-8" action="" method="post" id="reviewFrm" name="reviewFrm">
+			                        <input id="ratings-hidden" name="rating" type="hidden"> 
+			                        <textarea class="form-control animated" cols="80" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+			        
+			                        <div class="text-right">
+			                            <!--- <div class="stars starrr" data-rating="0"></div> --->
+			                            <a class="btn btn-danger btn-sm" href="##" id="close-review-box" style="display:none; margin-right: 10px;">
+			                            <span class="glyphicon glyphicon-remove"></span>Cancel</a>
+			                            <button class="btn btn-success btn-lg" type="button" onclick="saveReview()">Save</button>
+			                        </div>
+			                    </form>
+			                </div>
+			            </div>
+			        </div> 
+			         
+					</div>
 				</div>
-			</div>
+
+			</cfif>		
 		</div>
 	</div>
 </cfoutput>
