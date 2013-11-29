@@ -328,7 +328,7 @@
 			
 			SELECT 
 				tbl.*
-				,'' as images
+				,(select group_concat(ImageFile) from ProductImages where ProductUID=tbl.ProductUID) as images
 			from (			
 			select
 				p.ProductUID

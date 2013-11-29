@@ -49,11 +49,12 @@
 
 		function openCategory(cuid) {			
 			if (cuid != "") {
+				var uuid=$("##companyUID").val();
 				var w=1250;
 				var h=750;
 				var LeftPosition = (screen.width) ? (screen.width-w)/2 : 0; 
 				var TopPosition = (screen.height) ? (screen.height-h)/2-35 : 0;
-				var url="index.cfm?action=products.category&cuid="+cuid+"&modal=1";
+				var url="index.cfm?action=products.category&cuid="+cuid+"&uid="+uuid+"&modal=1";
 				var winName="Category Products";
 				var settings = 'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars=1';
 				var popupWindow = window.open(url,winName,settings);
